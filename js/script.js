@@ -3,23 +3,22 @@ let stateCheck = setInterval(() => {
     if (document.readyState === 'complete') {
       clearInterval(stateCheck);
         // document ready
-        console.log("Cargado 1");
 
-        let nombre = document.querySelector('#nombre');
-        let apellido = document.querySelector('#apellido');
-        let correo = document.querySelector('#correo');
-        let password = document.querySelector('#password');
-
-        let rol = document.querySelector('#rol');
-        let imagen_archivo = document.querySelector('#imagen_archivo');
 
         var form = document.querySelector("form");
-        form.addEventListener("blur", function( event ) {
+        form.addEventListener("blur", function( event ) {  //listener blur para evaluar el campo una vez fuera de el 
           
-          console.log(event.target.value);
           let dato = event.target.value;
-          if(dato.trim() != ''){
-            console.log("con datos");
+          if(dato.trim() != ''){//quitando los campos vacioss 
+            if(event.target.getAttribute('id') === 'imagen_archivo'){  //Validando que sea el input de imagen
+              console.log("this is the document");
+              let extension = dato.split('.').pop();  //Separando la extencion para validar
+              if(extension == 'jpg'){   //Validando la extension correcta
+                console.log("it is a valid format");
+              }else{
+                console.log("it isn't valid format");
+              }
+            }
           }else{
             console.log("sin datos");
           }
