@@ -13,6 +13,7 @@ let stateCheck = setInterval(() => {
             //the target has data
             notEmptyData(event.target);
             correctFormat(event.target);
+
  
           }else{
             //the target doesn't have data
@@ -40,9 +41,11 @@ let stateCheck = setInterval(() => {
 
         function emptyData(element){
           element.classList.add('error');
+          document.querySelector('#campoError').classList.add("campoError", "error");
         }
         function notEmptyData(element){
           element.classList.remove('error');
+          document.querySelector('#campoError').classList.remove('campoError', 'error');
         }
 
     }

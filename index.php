@@ -53,6 +53,10 @@
                 
             </div>
         </form>
+        
+        <div class="" id ="campoError" style="display: none">
+            <h3>Hubo un error, comprueba los datos ingresados</h3>
+        </div>
     </main>
     <script src="js/script.js"></script>
 </body>
