@@ -1,0 +1,54 @@
+/* apply a natural box layout model to all elements, but allowing components to change */
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+header{
+    background-image: url(../img/email-4284157_960_720.png);
+    height: 40vh;
+    background-position: center center;
+    background-size: cover;
+    filter:grayscale(40%);
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    -webkit-filter:grayscale(40%);
+}
+h2{
+  font-size: 10vh;
+  color: rgb(155, 103, 103);
+  text-shadow: 2px 2px #ffffff;
+}
+form{
+    max-width: 800px;
+    margin: 0 auto 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-gap: 10px;
+    
+}
+.contenedores.f{
+  
+  grid-column: 1/3;
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 10px;
+}
+.f .boton-submit{
+  grid-column: 1/3;
+}
+
+label{
+  align-content: left;
+  
+}
+
+
+.boton-submit{
+  width: 50%;
+  margin: 0 auto;
+
+}
