@@ -67,7 +67,64 @@ h3{
   margin-top: 30px;
   width: 1000px;
   height: 50px;
+  display: block!important;
+
+}
+.campoError > div{
   display: flex!important;
   align-items: center;
   justify-content: space-evenly;
+  flex-direction: row;
+}
+
+ /*
+   Bienvenido
+ */
+ span{
+   font-weight: 700;
+   margin-right: 10px;
+ }
+
+ .bg-red{
+   background-color: #82005f;
+ }
+
+.tarjeta{
+  max-width: 800px;
+  margin: 0 auto;
+  padding:  0 30px 40px 30px;
+  background-color: #18436e;
+  -webkit-box-shadow: 0px 6px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 6px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 6px 5px 0px rgba(0,0,0,0.75);
+}
+div > p{
+  color: white;
+}
+.top{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding-bottom: 30px;
+}
+.rol h2{
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0;
+  padding-bottom: 20px;
+  color: #39e4ed;
+
+}
+.imagen{
+  width: 300px;
+}
+img{
+  display: block;
+  margin: 0 auto;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
 }

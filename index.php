@@ -39,7 +39,7 @@
             <div class="contenedores f">
                 <label for="rol">
                  <p>Rol</p>
-                    <select>
+                    <select name="rol" id="rol">
                         <option value="admin">Administrar</option>
                         <option value="consul">Consultar</option>
                     </select>
@@ -49,13 +49,12 @@
                     <input type="file"  id="imagen_archivo" name="imagen_archivo" accept=".jpg">
                 </label>
     
-                <input  id="#enviar"class="boton-submit"type="submit" value="enviar" >
+                <input  id="enviar" class="boton-submit" type="submit" value="enviar" >
                 
             </div>
         </form>
         
-        <div class="" id ="campoError" style="display: none">
-            <h3>Hubo un error, comprueba los datos ingresados</h3>
+        <div  id ="campoError" class="campoError">
         </div>
     </main>
     <script src="js/script.js"></script>
