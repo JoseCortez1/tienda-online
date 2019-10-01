@@ -96,8 +96,9 @@ let stateCheck = setInterval(() => {
           let exist = document.querySelector("#" + element.getAttribute('id') + 'error');
           console.log(exist);
           if(exist === null){
+            console.log("No existe un campo eror");
             let p = document.createElement('p');
-            p.innerHTML = "Informacion incompleta o erronea : "  + element.getAttribute('name');
+            p.innerHTML = `Informacion incompleta o erronea : ${element.getAttribute('name')}`;
             let valueId = element.getAttribute('id') + "error";
   
             let contenedorE = document.createElement('div');
