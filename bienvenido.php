@@ -24,7 +24,7 @@
 
     if ($file_name != '') {                     // Verifica que exista el archivo
 
-        @copy($file_tmp, $dir . $file_name);     // Copia el archivo temporal a la carpeta asignada en la varibale $dir
+        @copy($file_tmp, $dir.$file_name);     // Copia el archivo temporal a la carpeta asignada en la varibale $dir
     }
     
     ?>
@@ -34,7 +34,7 @@
         </div>
         <div class="top">
             <div class="imagen">
-                <img src="<?php echo "archivos/$file_name"; ?>" alt="Imagen de credencial">
+                <img src="<?php echo "$dir$file_name"; ?>" alt="Imagen de credencial">
             </div>
             <div class="datos">
                 <p> <span> Nombre: </span> <?php echo $_POST['nombre'] . " " . $_POST['apellido'];?> </p>

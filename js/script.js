@@ -83,6 +83,7 @@ let stateCheck = setInterval(() => {
 
         }
         function notEmptyData(element){
+          element.classList.remove("error");
           let removeElement = document.querySelector("#" + element.getAttribute('id') + "error");
           if(removeElement){
             removeElement.remove();
