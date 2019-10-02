@@ -4,6 +4,7 @@
     define('USER', 'root');
     define('PASS', '36563621');
 
-    $conn-> new mysqli()
+    $conn = new mysqli(HOST,USER,PASS,DB);
+    
 
 ?>
