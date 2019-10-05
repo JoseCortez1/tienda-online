@@ -6,7 +6,12 @@ let stateCheck = setInterval(() => {
 
 
 
+        /**BTN SUBMIT CANCELAR */
+        document.querySelector('#cancelar').addEventListener('click', function(e){
+          e.preventDefault();
 
+          window.location.href = 'index.php';
+        });
 
         var form = document.querySelector("form");
         form.addEventListener("blur", function( event ) {  //listener blur para evaluar el campo una vez fuera de el 
@@ -55,7 +60,7 @@ let stateCheck = setInterval(() => {
           }else{
             if(correctFormat(imagen_archivo)){
               console.log("Final step");
-              form.action = "bienvenido.php";
+              form.action = "inc/funciones/add-admin.php";
               form.submit();
             }
           }

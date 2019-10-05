@@ -1,3 +1,15 @@
+<?php 
+    
+    include "inc/funciones/list_admin.php";
+/*
+    echo "<pre>";
+        
+        foreach($respuesta as $administrador){
+            var_dump($administrador);   
+        }
+    echo "</pre>";
+*/
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,58 +17,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/main.css">
-    <title>Formulario</title>
+    <title>Lista Administradores</title>
 </head>
 <body>
-    <header class="hero">
-        <h2>Formulario para ALTA</h2>
-    </header>
-    <main>
-        <form action="#" method="post" enctype= "multipart/form-data">
-            <div class="contenedores">
-                <label for="nombre">
-                    <p>Nombre: </p>
-                    <input type="text"  name="nombre" id="nombre" >
-                </label>
-    
-                <label for="apellido">
-                    <p>Apellido: </p>
-                    <input type="text"  name="apellido" id="apellido" >
-                </label>
+    <div class="contenedor">
+        <div class="administradores-table">
+            <div class="">
+                <input type="submit" id="alta-admin" class="btn-alta" value="ALTA ADMINISTRADOR">
             </div>
-            <div class="contenedores">
-                
-                <label for="correo">
-                    <p>Correo: </p>
-                    <input type="email"  name="correo" id="correo" >
-                </label>
-    
-                <label for="password">
-                    <p>Contraseña: </p>
-                    <input type="password"  name="password" id="password" >
-                </label>    
+            <div class="head-admin">
+                <h2>Administradores</h2>
             </div>
-            <div class="contenedores f">
-                <label for="rol">
-                 <p>Rol</p>
-                    <select name="rol" id="rol">
-                        <option value="admin">Administrar</option>
-                        <option value="consul">Consultar</option>
-                    </select>
-                </label>
-                <label for="archivo">
-                    <p>Foto de perfil</p>
-                    <input type="file"  id="imagen_archivo" name="imagen_archivo" accept=".jpg">
-                </label>
-    
-                <input  id="enviar" class="boton-submit" type="submit" value="enviar" >
-                
+            <div class="body-admin">
+                <?php foreach($respuesta as $administrador){ ?>
+                    <div class="admin" id="<?php echo $administrador['id']; ?>">
+                        <img class="img-admin" src="archivos/<?php echo $administrador['archivo'];?>" alt="foto usuario">
+                        <p class="nombre">
+                            <?php echo  $administrador['nombre'] . " " . $administrador['apellido']; ?>
+                        </p>
+
+                        <p>
+                            <?php echo $administrador['correo']; ?>
+                        </p>
+                        <img  src="img/trash.svg" class="icono eliminar" alt="imagen basura">
+                    </div> 
+                <?php } ?>
             </div>
-        </form>
-        
-        <div  id ="campoError" class="campoError">
         </div>
-    </main>
-    <script src="js/script.js"></script>
+    </div>
+    <script src="js/admin-scripts.js"></script>
 </body>
 </html>

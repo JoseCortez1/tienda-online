@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/main.css">
-    <title>Bienvenido</title>
+    <title>Perfil</title>
 </head>
 <body class="bg-red">
 <?php
@@ -16,25 +16,31 @@
     $correo = $_POST['correo'];
     $password = $_POST['password'];
     $rol = $_POST['rol'];
+    if($rol == 'admin'){
+        $tipoUser = 1;
+    }else{
+        $tipoUser = 2;
+    }
 
+    
     $cadena = explode(".",$file_name);          // Separa el nombre para obtener la extension, almacena en un arreglo
     $ext = $cadena[1];                          // Extension extraida del arreglo en la variable $cadena
     $dir = "archivos/";                         // Carpeta donde se guardan los archivos
     $file_enc = md5_file($file_tmp);
-
-    if ($file_name != '') {                     // Verifica que exista el archivo
-
-        @copy($file_tmp, $dir.$file_name);     // Copia el archivo temporal a la carpeta asignada en la varibale $dir
+    if(isset($file_name)){
+        $newNAme = $file_enc.'.'.$ext  ;            //Ponemos el nuevo nombre al archivo enc
+        copy($file_tmp, $dir.$newNAme);     // Copia el archivo temporal a la carpeta asignada en la varibale $dir
     }
-    
-    ?>
+   
+?>
+
     <main class="tarjeta">
         <div class="rol">
             <h2><?php echo ($_POST['rol'] === 'consul') ? "consultar" : "administrar"; ?></h2>
         </div>
         <div class="top">
             <div class="imagen">
-                <img src="<?php echo "$dir$file_name"; ?>" alt="Imagen de credencial">
+                <img src="<?php echo "$dir$newNAme"; ?>" alt="Imagen de credencial">
             </div>
             <div class="datos">
                 <p> <span> Nombre: </span> <?php echo $_POST['nombre'] . " " . $_POST['apellido'];?> </p>
@@ -59,5 +65,12 @@
         </div>
 
     </main>
+    <script >
+        /**BTN SUBMIT ALTA DE ADMIN */
+        document.querySelector("#alta-admin").addEventListener('click', function(e){
+          e.preventDefault();
+          window.location.href = 'index.php';
+        });
+    </script>
 </body>
 </html>
