@@ -20,17 +20,14 @@ let stateCheck = setInterval(() => {
           if(dato.trim() != ''){
             //the target has data
             notEmptyData(event.target);
-            correctFormat(event.target);
             if(event.target.getAttribute('id') == "password"){
-              console.log("pass: ");
               let pass = event.target.value + '';
-              console.log(pass.length);
-              passwordValidate(event.target.value);
+              passwordValidate(event.target);
             }
 
           }else{
             //the target doesn't have data
-            emptyData(event.target);
+            showMessage(event.target, "campo vacio");
             
           }
           
@@ -42,24 +39,18 @@ let stateCheck = setInterval(() => {
           e.preventDefault();
           let nombre = document.querySelector('#nombre').value,
               correo = document.querySelector('#correo').value,
-              password = document.querySelector('#password').value,
+              password = document.querySelector('#password'),
               apellido = document.querySelector('#apellido').value,
               rol = document.querySelector('#rol').value,
               imagen_archivo = document.querySelector('#imagen_archivo');
 
           console.log(password.length);
-          if( (nombre.trim() === '') || (apellido.trim() === '') || (correo.trim() === '') || (password.trim() === '') || (rol.trim() === '') || (imagen_archivo.value.trim() === '') ){
-            console.log(nombre.trim());
-            console.log(apellido.trim());
-            console.log(correo.trim());
-            console.log(passwordValidate(password));
-            console.log(password.trim());
-            console.log(rol.trim());
-            console.log(imagen_archivo.value.trim());
-            console.log("data incomplete".trim());
-          }else{
+          if( (nombre.trim() === '') || (apellido.trim() === '') || (correo.trim() === '') || passwordValidate(password) || (rol.trim() === '') || (imagen_archivo.value.trim() === '') ){
+
+            showMessage(, "campo vacio ");
+          }  
+          else{
             if(correctFormat(imagen_archivo)){
-              console.log("Final step");
               form.action = "inc/funciones/add-admin.php";
               form.submit();
             }
@@ -76,7 +67,7 @@ let stateCheck = setInterval(() => {
               notEmptyData(element);
               return true;
             }else{
-              emptyData(element);
+              showMessage(element, "formato invalido");
             }
             return false;
           }
@@ -84,59 +75,48 @@ let stateCheck = setInterval(() => {
 
         function emptyData(element){
           element.classList.add("error");
-          createElement(element);
-
         }
         function notEmptyData(element){
-          element.classList.remove("error");
-          let removeElement = document.querySelector("#" + element.getAttribute('id') + "error");
-          if(removeElement){
-            removeElement.remove();
-          }
-            
+          element.classList.remove("error");            
         }
 
-
-        function createElement(element){
-          
-          let exist = document.querySelector("#" + element.getAttribute('id') + 'error');
-          console.log(exist);
-          if(exist === null){
-            console.log("No existe un campo eror");
-            let p = document.createElement('p');
-            p.innerHTML = `Informacion incompleta o erronea : ${element.getAttribute('name')}`;
-            let valueId = element.getAttribute('id') + "error";
-  
-            let contenedorE = document.createElement('div');
-            
-            contenedorE.appendChild(p);
-            contenedorE.setAttribute('id', valueId);
-            contenedorE.classList.add('error', 'campoError');
         
-            document.querySelector('#campoError').appendChild(contenedorE);  
-          }
+        function showMessage(element, texto){ //Mostrar MEnsaje
+          
+          emptyData(element);
+
+          setTimeout(() => {
+            if(!document.querySelector('#errorEncontrado')){
+              let p = document.createElement('p');
+              p.setAttribute('id', 'errorEncontrado');
+              p.innerHTML = "Error: " + texto;
+          
+              document.querySelector('#campoError').appendChild(p); 
+              document.querySelector('#campoError').classList.add('error'); 
+            }
+            let strError = document.querySelector('#errorEncontrado').textContent;
+            if(strError.indexOf(texto) < 0){
+              document.querySelector('#errorEncontrado').textContent += ", " + texto;
+            }
+
+            setTimeout(() =>{
+              document.querySelector('#campoError').classList.remove('error'); 
+                setTimeout(() => {
+
+                  document.querySelector('#errorEncontrado').remove(); 
+                }, 500);    
+            },3000);
+        },100);
+            
         }
+        
         function passwordValidate(pass){
           console.log("passValidate");
-          if(pass.length >= 8){
+          if(pass.value.length >= 8){
+            notEmptyData(pass);
             return true;
           }
-          let password = document.querySelector('#password');
-          
-          let exist = document.querySelector("#" + password.getAttribute('id') + 'error');
-          if(exist === null){
-            let p = document.createElement('p');
-            p.innerHTML = "La contraseña debe contener al menos 8 caracteres";
-            let valueId = "passworderror";
-  
-            let contenedorE = document.createElement('div');
-            
-            contenedorE.appendChild(p);
-            contenedorE.setAttribute('id', valueId);
-            contenedorE.classList.add('error', 'campoError');
-        
-            document.querySelector('#campoError').appendChild(contenedorE);  
-          }
+          showMessage(pass, "contraseña debe contener al menos 8 caracteres");        
           return false;
         }
 

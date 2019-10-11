@@ -38,7 +38,32 @@ let stateCheck = setInterval(() => {
                 }
                 xhml.send(form); //enviando datos
             }
+
         });
 
     }
 }, 100);
+
+
+            /**
+             * AJAX Con JQUERY
+             function(confirm('borrar registro ' + fila + '?')){
+                 $.ajax({
+                     url    : 'respuesta.txt',
+                     type   : 'post',
+                     dataType:'text',
+                     data   :'id='+fila,
+                     success:function(res){
+                         if(res === 1){
+                             $('#fila'+fila).hide();
+
+                         }else{
+                             alert('Error en la elimincion');
+                         }
+                     },error: function(){
+                         alert('Error al conectar con el servidor')
+                     }
+                 }); //Terminacion del Ajax
+             }
+
+             */
