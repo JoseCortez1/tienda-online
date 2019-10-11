@@ -14,34 +14,58 @@ let stateCheck = setInterval(() => {
         document.querySelector('.body-admin').addEventListener('click', function(e){
             console.log(e.target);
             if(e.target.classList.contains('eliminar')){
-                
-                let id= e.target.parentElement.getAttribute('id');
-                console.log(id);
-                let form = new FormData;
-                form.append('id', id);
-                
-                //ELIMINADO DE LA BASE
-                
-                let xhml = new XMLHttpRequest;  //creado el objeto
-    
-    
-                xhml.open('POST','inc/funciones/remove-admin.php',true); //Abriendo la conexion
-    
-                xhml.onload = function(){ //verificando que se acceda corretamente
-                    if(this.status === 200){
-                        console.log(xhml.responseText);
-                        let respuesta = JSON.parse(xhml.responseText);
-                        if(respuesta.respuesta === 'correcto'){
-                            e.target.parentElement.remove();
-                        }
+                Swal.fire({
+                    title: '¿Estas seguro(a)?',
+                    text: "No puedes revertir esta opción!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Borrar!'
+                  }).then((result) => {
+                    if (result.value) {
+                        eliminarElemento(e.target);
+                      Swal.fire(
+                        'Eliminado!',
+                        'El Administrador fue eliminado',
+                        'success'
+                      )
                     }
-                }
-                xhml.send(form); //enviando datos
+                  })
+
+
+                
+
             }
 
         });
 
-    }
+        function eliminarElemento(elemento){
+            let id= elemento.parentElement.getAttribute('id');
+            console.log(id);
+            let form = new FormData;
+            form.append('id', id);
+            
+            //ELIMINADO DE LA BASE
+            
+            let xhml = new XMLHttpRequest;  //creado el objeto
+
+
+            xhml.open('POST','inc/funciones/remove-admin.php',true); //Abriendo la conexion
+
+            xhml.onload = function(){ //verificando que se acceda corretamente
+                if(this.status === 200){
+                    console.log(xhml.responseText);
+                    let respuesta = JSON.parse(xhml.responseText);
+                    if(respuesta.respuesta === 'correcto'){
+                        elemento.parentElement.remove();
+                    }
+                }
+            }
+            xhml.send(form); //enviando datos
+        }
+
+    }//Fin de revision de carga del Documento
 }, 100);
 
 

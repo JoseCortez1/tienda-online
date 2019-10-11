@@ -10,7 +10,7 @@ let stateCheck = setInterval(() => {
         document.querySelector('#cancelar').addEventListener('click', function(e){
           e.preventDefault();
 
-          window.location.href = 'index.php';
+          window.location.href = 'listadoAdmin.php';
         });
 
         var form = document.querySelector("form");
@@ -21,7 +21,7 @@ let stateCheck = setInterval(() => {
             //the target has data
             notEmptyData(event.target);
             if(event.target.getAttribute('id') == "password"){
-              let pass = event.target.value + '';
+
               passwordValidate(event.target);
             }
 
@@ -43,11 +43,15 @@ let stateCheck = setInterval(() => {
               apellido = document.querySelector('#apellido').value,
               rol = document.querySelector('#rol').value,
               imagen_archivo = document.querySelector('#imagen_archivo');
+              console.log(nombre.trim() === '');
+              console.log(apellido.trim() === '');
+              console.log(correo.trim() === '');
+              console.log(!passwordValidate(password));
+              console.log(rol.trim() === '');
+              console.log(imagen_archivo.value.trim() === '') ;
+          if( (nombre.trim() === '') || (apellido.trim() === '') || (correo.trim() === '') || (!(passwordValidate(password))) ||  (rol.trim() === '') || (imagen_archivo.value.trim() === '') ){
 
-          console.log(password.length);
-          if( (nombre.trim() === '') || (apellido.trim() === '') || (correo.trim() === '') || passwordValidate(password) || (rol.trim() === '') || (imagen_archivo.value.trim() === '') ){
-
-            showMessage(, "campo vacio ");
+            showMessage(null, "campo vacio ");
           }  
           else{
             if(correctFormat(imagen_archivo)){
@@ -82,8 +86,10 @@ let stateCheck = setInterval(() => {
 
         
         function showMessage(element, texto){ //Mostrar MEnsaje
-          
-          emptyData(element);
+          if(element != null){
+
+            emptyData(element);
+          }
 
           setTimeout(() => {
             if(!document.querySelector('#errorEncontrado')){
@@ -111,9 +117,10 @@ let stateCheck = setInterval(() => {
         }
         
         function passwordValidate(pass){
-          console.log("passValidate");
+          
           if(pass.value.length >= 8){
             notEmptyData(pass);
+            console.log("passValidate: true");
             return true;
           }
           showMessage(pass, "contraseña debe contener al menos 8 caracteres");        

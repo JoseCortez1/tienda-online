@@ -8,6 +8,16 @@
     $apellido = $_POST['apellido'];
     $correo = $_POST['correo'];
     $password = $_POST['password'];
+    
+    //hashear el password(Aumenta la seguridad en la contraseña guardad);
+
+    $opciones = [
+        'cost'=>12, 
+    ];
+    $passHash = password_hash($password,PASSWORD_BCRYPT,$opciones);
+
+
+
     $rol = $_POST['rol'];
     if($rol == 'admin'){
         $tipoUser = 1;
@@ -33,12 +43,12 @@
 
     try {
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssssssi", $nombre, $apellido, $correo, $password,  $file_enc, $newNAme, $tipoUSer);
+        $stmt->bind_param("ssssssi", $nombre, $apellido, $correo, $passHash,  $file_enc, $newNAme, $tipoUSer);
         $stmt->execute();
 
         $stmt->close();
         $conn->close();
-        header('Location: ../../index.php');
+        header('Location: ../../listadoAdmin.php');
     } catch (Exception $e) {
        echo $e->getMessage();
       

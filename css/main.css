@@ -165,6 +165,7 @@ img{
   height: 60px;
 }
 .icono{
+  cursor: pointer;
   max-width: 20px;
   display: block;
   height: 20px;
@@ -188,4 +189,7 @@ img{
 }
 .nombre{
   text-transform: uppercase;
+}
+.swal2-icon.swal2-success [class^="swal2-success-line"][class$="long"]{ /** Error en el swa2 se cambia la posicion */
+  right: -0.2em!important;
 }

@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="css/main.css">
-    <title>Alta</title>
-</head>
-<body>
+<?php 
+    include 'inc/templates/header.php';
+?>
     <header class="hero">
         <h2>Formulario para ALTA</h2>
     </header>
@@ -40,6 +33,7 @@
                 <label for="rol">
                  <p>Rol</p>
                     <select name="rol" id="rol">
+                        <option value="">Tipo De Rol</option>
                         <option value="admin">Administrar</option>
                         <option value="consul">Consultar</option>
                     </select>
@@ -60,5 +54,6 @@
         </div>
     </main>
     <script src="js/script.js"></script>
+    
 </body>
 </html>
