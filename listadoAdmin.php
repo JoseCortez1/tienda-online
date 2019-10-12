@@ -1,5 +1,5 @@
 <?php 
-    
+    include "inc/funciones/sesiones.php";
     include "inc/funciones/list_admin.php";
     include "inc/templates/header.php";
 /*
@@ -12,9 +12,10 @@
 */
 ?>
 
-    <div class="contenedor">
+    <div class="contenedor-md">
         <div class="administradores-table">
-            <div class="">
+            <div class="btn-listaAdmin reg-input">
+                <input type="submit" id="menu-principal" class="btn-alta " value="MENU PRINCIPAL">
                 <input type="submit" id="alta-admin" class="btn-alta" value="ALTA ADMINISTRADOR">
             </div>
             <div class="head-admin">
@@ -22,17 +23,23 @@
             </div>
             <div class="body-admin">
                 <?php foreach($respuesta as $administrador){ ?>
-                    <div class="admin" id="<?php echo $administrador['id']; ?>">
-                        <img class="img-admin" src="archivos/<?php echo $administrador['archivo'];?>" alt="foto usuario">
-                        <p class="nombre">
-                            <?php echo  $administrador['nombre'] . " " . $administrador['apellido']; ?>
-                        </p>
-
-                        <p>
-                            <?php echo $administrador['correo']; ?>
-                        </p>
-                        <img  src="img/trash.svg" class="icono eliminar" alt="imagen basura">
-                    </div> 
+                    <form action="#"  method="post" class="form-admin">
+                        <div class="admin" id="<?php echo $administrador['id']; ?>">
+                            <img class="img-admin consultar-info" src="archivos/<?php echo $administrador['archivo'];?>" alt="foto usuario">
+                            <p class="nombre">
+                                <?php echo  $administrador['nombre'] . " " . $administrador['apellido']; ?>
+                            </p>
+    
+                            <p>
+                                <?php echo $administrador['correo']; ?>
+                            </p>
+                            <div class="iconos">
+                                <img  src="img/trash.svg" class="icono eliminar" alt="imagen basura">
+                                <input type="hidden"  name="id-user" value="<?php echo $administrador['id']; ?>">
+                                <img  src="img/user-edit-solid.svg" class="icono editar" alt="imagen editar">
+                            </div>
+                        </div> 
+                    </form>
                 <?php } ?>
             </div>
         </div>

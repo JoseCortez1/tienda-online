@@ -1,11 +1,12 @@
 <?php 
+
     include 'inc/templates/header.php';
 ?>
-    <header class="hero">
+    <header class="hero alta_user">
         <h2>Formulario para ALTA</h2>
     </header>
     <main>
-        <form action="#" method="post" enctype= "multipart/form-data">
+        <form action="#" id="crear" method="post" enctype= "multipart/form-data">
             <div class="contenedores">
                 <label for="nombre">
                     <p>Nombre: </p>

@@ -6,7 +6,7 @@ html {
   box-sizing: inherit;
 }
 
-header{
+header.alta_user{
     background-image: url(../img/email-4284157_960_720.png);
     height: 40vh;
     background-position: center center;
@@ -18,8 +18,9 @@ header{
     -webkit-filter:grayscale(40%);
 }
 h2{
+  font-family: 'Montserrat', sans-serif;
   font-size: 5vh;
-  color: rgb(155, 103, 103);
+  color: #212529;
 }
 form{
     max-width: 800px;
@@ -29,8 +30,17 @@ form{
     grid-gap: 10px;
     
 }
+
 .contenedor{
   max-width: 600px;
+  margin: 0 auto;
+}
+.contenedor-md{
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.contenedor-big{
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -96,7 +106,7 @@ h3{
 }
 
  /*
-   Bienvenido
+   Listado Administradores 
  */
  span{
    font-weight: 700;
@@ -166,9 +176,9 @@ img{
 }
 .icono{
   cursor: pointer;
-  max-width: 20px;
+  width: 40px;
   display: block;
-  height: 20px;
+  height: 40px;
   margin: auto auto;
   border-radius: 0;
   -webkit-border-radius: 0;
@@ -176,11 +186,18 @@ img{
   -ms-border-radius: 0;
   -o-border-radius: 0;
 }
+form.form-admin{
+  display: inline;
+}
 .admin{
   display: grid;
   grid-template-columns: repeat(4,1fr);
   padding: 10px 10px;
   border-radius: 5px;
+}
+.iconos{
+  display: flex;
+  justify-content: space-evenly;
 }
 .admin:hover{
 
@@ -190,6 +207,182 @@ img{
 .nombre{
   text-transform: uppercase;
 }
+.btn-listaAdmin{
+  display: flex;
+  justify-content: space-between;
+}
+.btn-listaAdmin input{
+  margin: 20px 20px;
+}
+.consultar-info{
+  cursor: pointer;
+}
+
+
+
+
 .swal2-icon.swal2-success [class^="swal2-success-line"][class$="long"]{ /** Error en el swa2 se cambia la posicion */
   right: -0.2em!important;
+}
+.swal2-icon.swal2-error [class^="swal2-x-mark-line"][class$="right"] {
+  right: .0em!important;
+}
+
+/**                              Index.php              */
+body.index{
+  background-image: url(../img/background-index.jpg);
+  background-repeat: no-repeat;
+  background-size: 100% 100vh ;
+}
+.card-body{
+  margin: 30vh 30vw;
+  padding: 30px 20px;
+  border-radius: 25px;
+  background-color: #fdfeff38;
+}
+.register-btn{
+  text-align: center;
+}
+.register input,.register a{
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.6rem;
+  padding: 10px 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  border-radius: 25px;
+}
+.register-sm{
+  font-family: 'Montserrat', sans-serif;
+  font-size:1.2rem;
+  font-weight: 700;
+}
+.register-sm input{
+  font-size:1.2rem;
+  width: 75%;
+}
+.register-btn a, .reg-input input{
+  background-color: #212529;
+  border-radius: 25px;
+  padding: 10px 10px;
+  text-align: center;
+  color: white;
+  text-decoration: none;
+  transition: all .5s ease-in-out;
+  
+}
+.register-btn a:hover, .reg-input input:hover{
+  background-color: #0d4f91;
+   
+}
+.crear-cuenta a{
+  display: block;
+  background-color: #fdfeff;
+  color: black;
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+
+/**     Principal       */
+
+.nav-principal{
+  margin: 0 0;
+  height: 80px;
+  background-color: #406080 ;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 20px ;
+}
+.sesion-principal{
+  display: flex;
+  justify-content: space-around;
+}
+.nav-principal nav{
+  margin-top: 10px;
+}
+.nav-principal nav a{
+  color: white;
+  text-decoration: none;
+  
+  border-right: white solid 0.5px;
+  
+}
+.nav-principal nav a:last-child{
+  border-right: none;
+}
+.nav-principal div a{
+  display: block;
+  padding: 10px 5px 5px 5px;
+  border-radius: 10px;
+  background-color: black;
+  color: white;
+  text-decoration: none;
+}
+.nav-principal div h3{
+  margin-top: 10px;
+}
+h3{
+  font-family: 'Montserrat', sans-serif;
+}
+h3 span{
+  text-transform: uppercase;
+}
+.hover-nav{
+  font-family: 'Montserrat', sans-serif;
+  padding: 8px 10px ;
+  border-radius: 5px;
+  transition: all 1s ease-in-out;
+}
+.nav{
+  font-weight: 400;
+  font-size: 1.2rem;
+}
+.hover-nav:hover{
+  background-color: #A3B8CC;
+
+}
+
+
+/**   Informacion Contactos **/
+
+
+.info-contacto{
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  gap: 0;
+  place-items: center;
+  margin: 0 0;
+}
+.info-contacto::before{
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%;
+  width: 100%;
+  background-image: url(../img/beatiful-landscape-bird-s-eye-view-colors-2922647.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: blur(1px);
+}
+.c-info{
+  position: relative;
+}
+.grid-2{
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 20px;
+}
+.cuadro{
+  border-radius: 10px;
+}
+.personal h3,.personal h4{
+  margin: 0 0;
+  text-align: justify;
+}
+.extras{
+  padding-left: 0;
 }

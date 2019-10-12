@@ -39,11 +39,9 @@
 
 
 
-    $sql = " INSERT INTO administradores(nombre, apellido, correo, pass, archivo_n, archivo, rol) VALUES (?,?,?,?,?,?,?) ";
-
     try {
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssssssi", $nombre, $apellido, $correo, $passHash,  $file_enc, $newNAme, $tipoUSer);
+        $stmt = $conn->prepare("INSERT INTO administradores(nombre, apellido, correo, pass, archivo_n, archivo, rol) VALUES (?,?,?,?,?,?,?) ");
+        $stmt->bind_param("ssssssi", $nombre, $apellido, $correo, $passHash,  $file_enc, $newNAme, $tipoUser);
         $stmt->execute();
 
         $stmt->close();
