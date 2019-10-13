@@ -11,6 +11,7 @@
 
     <div class="card-body contenedor">
         <div class="register">
+            <h2 style="text-align: center">LOGIN</h2>
             <input type="text" placeholder="Correo" id="correo">
             <input type="password" placeholder="Contraseña" id="pass">
         </div>

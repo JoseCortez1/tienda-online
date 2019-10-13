@@ -1,6 +1,6 @@
 <?php 
     if(!(isset($_POST['id-user']))){
-        header('location: ../../index.php');
+        header('location: index.php');
     }
     
     $id = (int)$_POST['id-user'];
@@ -15,7 +15,7 @@
     if($nombre){
         include 'inc/templates/header.php';    
     ?>
-        <form action="#" id="actualizar" method="post" enctype= "multipart/form-data">
+        <form action="#" id="actualizar" class="card-body form-ec" method="post" enctype= "multipart/form-data">
 
             <div class="contenedores">
                 <label for="nombre"  class="register register-sm">

@@ -63,17 +63,23 @@ label{
   
 }
 .YES{
-  background-color: #52B31B;
-}
-.NOT{
-  background-color: #B34C24;
+  background-color: #BEFF59;
+}.NOT{
+  background-color: #FF5028;
 }
 .YES,.NOT{
+  color: black;
+  border-radius: 25px;
+  padding-bottom: 20px;
+}
+.YES:hover,.NOT:hover{
+  background-color: #B37162;
   color: white;
+  transition: all 0.5s ease-in-out;
 }
 
 .boton-submit{
-  width: 50%;
+  width: 100%;
   margin: 0 auto;
 
 }
@@ -239,6 +245,10 @@ body.index{
   padding: 30px 20px;
   border-radius: 25px;
   background-color: #fdfeff38;
+}
+.form-ec{
+  margin: 0 auto 0 auto!important;
+  width: 80%;
 }
 .register-btn{
   text-align: center;

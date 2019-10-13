@@ -6,7 +6,7 @@
         include 'conexion.php';
         $correo = $_POST['correo'];
         $pass = $_POST['pass'];
-        $stmt = $conn->prepare("SELECT nombre, correo, pass, id , rol FROM administradores WHERE correo = ?");
+        $stmt = $conn->prepare("SELECT nombre, correo, pass, id , rol FROM administradores WHERE correo = ? AND eliminado = 0");
         $stmt->bind_param('s',$correo);
         $stmt->execute();
 
