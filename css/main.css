@@ -6,7 +6,7 @@ html {
   box-sizing: inherit;
 }
 
-header.alta_user{
+.alta_user{
     background-image: url(../img/email-4284157_960_720.png);
     height: 40vh;
     background-position: center center;

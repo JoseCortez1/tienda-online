@@ -4,6 +4,7 @@
         header('location: index.php');
     }
     
+    
     $id = (int)$_POST['id-user'];
     include 'inc/funciones/conexion.php';
     $stmt = $conn->prepare("SELECT nombre, apellido, correo, archivo, rol, pass FROM administradores WHERE id = ?");

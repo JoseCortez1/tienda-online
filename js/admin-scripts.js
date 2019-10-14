@@ -17,27 +17,51 @@ let stateCheck = setInterval(() => {
             window.location.href = 'principal.php';
         });
 
+        //Eliminar Administrador
         document.querySelector('.body-admin').addEventListener('click', function(e){
             console.log(e.target);
             if(e.target.classList.contains('eliminar')){
-                Swal.fire({
-                    title: '¿Estas seguro(a)?',
-                    text: "No puedes revertir esta opción!",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si, Borrar!'
-                  }).then((result) => {
-                    if (result.value) {
-                        eliminarElemento(e.target);
-                      Swal.fire(
-                        'Eliminado!',
-                        'El Administrador fue eliminado',
-                        'success'
-                      )
-                    }
-                  })
+                if(!eliminaLogeado(e.target.parentElement.parentElement.getAttribute('id'))){
+
+                    Swal.fire({
+                        title: '¿Estas seguro(a)?',
+                        text: "No puedes revertir esta opción!",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Si, Borrar!'
+                      }).then((result) => {
+                        if (result.value) {
+                            eliminarElemento(e.target);
+                          Swal.fire(
+                            'Eliminado!',
+                            'El Administrador fue eliminado',
+                            'success'
+                          )
+                        }
+                      })
+                }else{
+                    Swal.fire({
+                        title: 'El administrador es quien se encuentra logeado',
+                        text: "Si lo eliminas la sesion terminara",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Si, Borrar!'
+                      }).then((result) => {
+                        if (result.value) {
+                            eliminarElemento(e.target);
+                          Swal.fire(
+                            'Eliminado!',
+                            'El Administrador fue eliminado',
+                            'success'
+                          )
+                            window.location.href = 'index.php?cerrar_sesion=true';
+                        }
+                      })
+                }
             }
 
             if(e.target.classList.contains('consultar-info')){
@@ -77,6 +101,31 @@ let stateCheck = setInterval(() => {
             }
             xhml.send(form); //enviando datos
         }
+
+        function eliminaLogeado(id_eliminar){
+            
+            let etiquetaUserLogin = document.querySelector('.usuarioLog').getAttribute('id').split(':');
+            let id_sesion = etiquetaUserLogin[1];
+            if(id_eliminar === id_sesion){
+                return true;
+            }
+            return false;
+        }
+
+        //Prevencion de eliminar el usuario logeado
+
+        /**La siguiente funcion se agregara en el momneto de eliminar al elemento 
+         * preguntando si el elemento que se va a eliminar es igual al 
+         * elemento que se ha logeado en caso de que sa verdad se cierra la sesion 
+         * a su vez se manda una alerta de lo que pasara, caso contrario se 
+         * continua con la eliminacion normal
+         */
+       /* eliminarLogin('click', function(e){
+            if(e.target.classList.contains('usuarioLog')){
+                let id = e.target.id
+            }
+        });
+        */
 
     }//Fin de revision de carga del Documento
 }, 100);

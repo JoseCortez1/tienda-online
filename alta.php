@@ -1,6 +1,10 @@
 <?php 
-
     include 'inc/templates/header.php';
+    session_start();
+    if(isset($_SESSION['id'])){
+        include 'inc/templates/navegacion.php';
+    }
+    
 ?>
     <header class="hero alta_user">
         <h2>Formulario para ALTA</h2>

@@ -13,7 +13,9 @@
     $stmt->fetch();
 
     if($nombre){
-        include 'inc/templates/header.php';    
+        session_start();
+        include 'inc/templates/header.php';  
+        include 'inc/templates/navegacion.php';    
     ?>
         <form action="#" id="actualizar" class="card-body form-ec" method="post" enctype= "multipart/form-data">
 

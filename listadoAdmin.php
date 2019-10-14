@@ -11,7 +11,11 @@
     echo "</pre>";
 */
 ?>
-
+    <header id="usuario_logeado:<?php echo $_SESSION['id'];?>" class="usuarioLog">
+    <?php
+            include 'inc/templates/navegacion.php';
+        ?>
+    </header>
     <div class="contenedor-md">
         <div class="administradores-table">
             <div class="btn-listaAdmin reg-input">
