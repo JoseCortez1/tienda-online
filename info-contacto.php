@@ -37,11 +37,6 @@
                 </div>
             </div>
         </div>
-        
-
-
-
-
     <?php
     }else{
         echo "Error";

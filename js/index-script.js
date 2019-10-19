@@ -2,7 +2,7 @@ let stateCheck = setInterval(() => {
     if (document.readyState === 'complete') {
       clearInterval(stateCheck);
         // document ready
-        
+        document.querySelector('#carga').style.display = 'none';
         /**Index  */
         document.querySelector('#registro').addEventListener('click', function(e){
             e.preventDefault();
@@ -40,10 +40,11 @@ let stateCheck = setInterval(() => {
                 if(respuesta.respuesta === 'correcto'){
                   window.location.href = 'principal.php';
                 }else{
+                  console.log(respuesta.respuesta);
                   Swal.fire({
                     type: 'error',
-                    title: 'Lo sentimos pero: ',
-                    text: respuesta.respuesta
+                    title: 'Error: ',
+                    text: "El correo o la contraseña son incorrectos"
                   });        
                 
                 }
@@ -58,4 +59,7 @@ let stateCheck = setInterval(() => {
 
 
         }  //Documneto Cargado Final
+        else{
+          document.querySelector('#carga').style.display = 'block';
+      }
     }, 100);  

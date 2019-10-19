@@ -1,16 +1,18 @@
 <?php 
-    include 'inc/templates/header.php';
     session_start();
-    if(isset($_SESSION['id'])){
-        include 'inc/templates/navegacion.php';
+    if(!(isset($_SESSION['id']))){
+        header('location: index.php');
     }
+    
+    include 'inc/templates/header.php';
+    include 'inc/templates/navegacion.php';
     
 ?>
     <header class="hero alta_user">
         <h2>Formulario para ALTA</h2>
     </header>
     <main>
-        <form action="#" id="crear" method="post" enctype= "multipart/form-data">
+        <form action="#" id="crear" method="post" enctype= "multipart/form-data" data-user="<?php  echo $_SESSION['id']; ?>">
             <div class="contenedores">
                 <label for="nombre">
                     <p>Nombre: </p>

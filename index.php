@@ -19,10 +19,6 @@
         <div class="register-btn register">
             <a href="#" id="registro" >Entrar</a> 
         </div>
-
-        <div class="register-btn crear-cuenta">
-            <a href="alta.php" id="" >Registrar</a> 
-        </div>
     </div>
     <script src="js/index-script.js"></script>
 <script src="js/sweetalert2.all.min.js"></script>

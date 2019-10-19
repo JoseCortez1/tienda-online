@@ -16,6 +16,9 @@
     ?>
 </head>
 <body class="<?php echo $pagina; ?>">
+<div id="carga">
+        <img src="img/loading.gif" alt="Cargando..." id="pantallaCarga">
+</div>
 
 
     

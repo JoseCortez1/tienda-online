@@ -1,9 +1,10 @@
-
-
 let stateCheck = setInterval(() => {
     if (document.readyState === 'complete') {
       clearInterval(stateCheck);
         // document ready
+
+        document.querySelector('#carga').style.display = 'none';
+
 
         /**BTN SUBMIT ALTA DE ADMIN */
         document.querySelector("#alta-admin").addEventListener('click', function(e){
@@ -11,11 +12,6 @@ let stateCheck = setInterval(() => {
             window.location.href = 'alta.php';
         });
 
-        /**BTN SUBMIT Menu principal */
-        document.querySelector("#menu-principal").addEventListener('click', function(e){
-            e.preventDefault();
-            window.location.href = 'principal.php';
-        });
 
         //Eliminar Administrador
         document.querySelector('.body-admin').addEventListener('click', function(e){
@@ -42,25 +38,10 @@ let stateCheck = setInterval(() => {
                         }
                       })
                 }else{
-                    Swal.fire({
-                        title: 'El administrador es quien se encuentra logeado',
-                        text: "Si lo eliminas la sesion terminara",
-                        type: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Si, Borrar!'
-                      }).then((result) => {
-                        if (result.value) {
-                            eliminarElemento(e.target);
-                          Swal.fire(
-                            'Eliminado!',
-                            'El Administrador fue eliminado',
-                            'success'
-                          )
-                            window.location.href = 'index.php?cerrar_sesion=true';
-                        }
-                      })
+                    console.log("Esto se presiono en admin: ")
+                    console.log(e.target);
+                    
+
                 }
             }
 
@@ -128,6 +109,9 @@ let stateCheck = setInterval(() => {
         */
 
     }//Fin de revision de carga del Documento
+    else{
+        document.querySelector('#carga').style.display = 'block';
+    }
 }, 100);
 
 

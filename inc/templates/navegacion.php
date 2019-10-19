@@ -7,6 +7,7 @@
     <div class="nav-principal">
         
         <nav>
+            <a href="principal.php" class="hover-nav nav">Inicio</a>
             <a class="hover-nav nav" href="listadoAdmin.php">Administradores</a>
             <a class="hover-nav nav" href="#">Productos</a>
         </nav>

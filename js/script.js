@@ -2,7 +2,9 @@
 let stateCheck = setInterval(() => {
     if (document.readyState === 'complete') {
       clearInterval(stateCheck);
+
         // document ready
+        document.querySelector('#carga').style.display = 'none';
 
 
 
@@ -18,14 +20,21 @@ let stateCheck = setInterval(() => {
         });
         
         var form = document.querySelector("form");
+
+        /**Blur listener */
         form.addEventListener("blur", function( event ) {  //listener blur para evaluar el campo una vez fuera de el 
           
           let dato = event.target.value;
           if(dato.trim() != ''){
             //the target has data
             notEmptyData(event.target);
-            if(event.target.getAttribute('id') == "password"){
+            if(event.target.getAttribute('id') == "correo"){
 
+              //LLmamamos a la funcion para verificar el correo
+              verificarCorreo(event.target);
+        
+            }
+            if(event.target.getAttribute('id') == "password"){
               passwordValidate(event.target);
             }
 
@@ -71,48 +80,34 @@ let stateCheck = setInterval(() => {
             showMessage(null, "campo vacio ");
           }  
           else{
-            if((imagen_archivo.value.trim() === '') && (form.getAttribute('id') === 'actualizar')){
-              //Si Nos encontramos actualizando la foto puede quedar sin informacion ya que pondremas la previamente almacenada
-              Swal.fire({
-                //Mostramos un mensaje para que se confirme la no addicion de la foto
-                title: 'La foto de perfil no fue seleccionada!',
-                text: "Esto no realizara cambios en su foto actual",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'No cambiar foto!'
-              }).then((result) => {
-                if (result.value) {
-                  form.action = "inc/funciones/act-admin.php";
-                  form.submit();
-                  Swal.fire(
-                    'Sin cambios!',
-                    'La foto actual no se modifico',
-                    'success'
-                  )
-                  form.action = "inc/funciones/act-admin.php";
-                  form.submit();
+            if(form.getAttribute('id') === 'actualizar'){
+              if(imagen_archivo.value.trim() === '') {
+                console.log("actualizar vacia");
+                form.action = "inc/funciones/act-admin.php";
+                form.submit();
+              }else{
+                
+                if(correctFormat(imagen_archivo)){ 
+                  console.log("actualizar formato c");
+                    form.action = "inc/funciones/act-admin.php";
+                    form.submit();
                 }
-              })
+              }
+
+                
             }else{
               //EN caso de no encnontrarnos en actualizar peidremos una imagene
               if((imagen_archivo.value.trim() === '')){
                 showMessage(null, "campo vacio ");
               }else{
                 //Al tener todos los datos verificamosel formato correcto de la imagen esto nos sirve en caso de que se quiera modificar la imagene en actualizar y crear
-
-                if(correctFormat(imagen_archivo)){
-                  if(form.getAttribute('id') === 'crear'){
-                    form.action = "inc/funciones/add-admin.php";
-                  }else{
-                    form.action = "inc/funciones/act-admin.php";
-                  }
+                if(correctFormat(imagen_archivo)){ 
+                  console.log("añadir correcto");
+                  form.action = "inc/funciones/add-admin.php";
                   form.submit();
-                }
+              }
               }
             }
-
           }
 
         });
@@ -125,9 +120,8 @@ let stateCheck = setInterval(() => {
             if(extension == 'jpg'){   //Validando la extension correcta
               notEmptyData(element);
               return true;
-            }else{
-              showMessage(element, "formato invalido");
             }
+            showMessage(element, "formato invalido");
             return false;
           }
         }
@@ -182,8 +176,57 @@ let stateCheck = setInterval(() => {
           showMessage(pass, "contraseña debe contener al menos 8 caracteres");        
           return false;
         }
+        function verificarCorreo(correo){
+          let pagina = document.querySelector('body');
+          let form = document.querySelector('form');
+          let id = form.dataset.user;
+
+          let datos = new FormData();
+          datos.append('correo', correo.value);
+
+          let xhr = new XMLHttpRequest();
+          xhr.open('post', 'inc/funciones/check-correo.php', true);
+
+          xhr.onload = function(){
+            if(this.status === 200){
+              console.log(xhr.responseText);
+              let respuesta = JSON.parse(xhr.responseText);
+              if(respuesta.respuesta == 'diferentes'){
+                notEmptyData(correo);
+              }
+
+              if( (pagina.classList.contains('alta')) && (respuesta.respuesta === 'iguales')){
+             
+                correo.value = '';
+                showMessage(correo, "Correo ya registrado");
+
+              }
+              if( (pagina.classList.contains('editar')) && (respuesta.respuesta === 'iguales')){
+                let campoCorreo = document.querySelector('#correo-actual');
+                let correoData = campoCorreo.dataset.correo_anterior;
+                console.log(correoData);
+
+                console.log(correo.value);
+                if(correoData == correo.value){
+                  notEmptyData(correo);
+                }else{
+                  correo.value = '';
+                  showMessage(correo, "Correo ya registrado");
+                }
+
+              }
+            
+             
+              
+            }
+          } 
+          xhr.send(datos);
+        }
 
 
 
     }  //Documneto Cargado Final
+    else{
+      document.querySelector('#carga').style.display = 'block';
+  }
   }, 100);

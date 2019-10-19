@@ -3,49 +3,53 @@
         header('location: index.php');
     }
     
-    $id = (int)$_POST['id-user'];
+    $id_busqueda = (int)$_POST['id-user'];
+    
     include 'inc/funciones/conexion.php';
     $stmt = $conn->prepare("SELECT nombre, apellido, correo, archivo, rol, pass FROM administradores WHERE id = ?");
-    $stmt->bind_param('i', $id);
+    $stmt->bind_param('i', $id_busqueda);
     $stmt->execute();
 
-    $stmt->bind_result($nombre, $apellido, $correo, $imagen, $rol, $pass);
+    $stmt->bind_result($nombre_busqueda, $apellido_busqueda, $correo_busqueda, $imagen_busqueda, $rol_busqueda, $pass_busqueda);
     $stmt->fetch();
 
-    if($nombre){
+    if($nombre_busqueda){
         session_start();
+        
         include 'inc/templates/header.php';  
         include 'inc/templates/navegacion.php';    
     ?>
-        <form action="#" id="actualizar" class="card-body form-ec" method="post" enctype= "multipart/form-data">
+        <form action="#" id="actualizar" class="card-body form-ec" method="post" enctype= "multipart/form-data" data-user="<?php  echo $_SESSION['id']; ?>">
 
             <div class="contenedores">
                 <label for="nombre"  class="register register-sm">
                     <p>Nombre: </p>
-                    <input type="text"  name="nombre" id="nombre" value="<?php echo $nombre;?>" >
+                    <input type="text"  name="nombre" id="nombre" value="<?php echo $nombre_busqueda;?>" >
                 </label>
     
                 <label for="apellido" class="register register-sm">
                     <p>Apellido: </p>
-                    <input type="text"  name="apellido" id="apellido" value="<?php echo $apellido;?>"  >
+                    <input type="text"  name="apellido" id="apellido" value="<?php echo $apellido_busqueda;?>"  >
                 </label>
             </div>
             <div class="contenedores">
                 
                 <label for="correo" class="register register-sm">
                     <p>Correo: </p>
-                    <input type="email"  name="correo" id="correo" value="<?php echo $correo;?>"  >
+                    <input type="hidden" id="correo-actual" data-correo_anterior="<?php echo $correo_busqueda;?>">
+                    <input type="email"  name="correo" id="correo" value="<?php echo $correo_busqueda;?>"  >
                 </label>
     
                 <label for="password" class="register register-sm">
                     <p>Contraseña: </p>
-                    <input type="password"  name="password" id="password" value="<?php echo $pass;?>" >
+                    <input type="hidden" name="password-old" value="<?php echo $pass_busqueda;?>">
+                    <input type="password"  name="password" id="password" value="<?php echo $pass_busqueda;?>" >
                 </label>    
             </div>
             <div class="contenedores f">
                 <label for="rol" class="register register-sm">
                  <p>Rol</p>
-                    <select name="rol" id="rol" value="<?php $flag =  ($rol === 1) ? 'admin' : 'consul';?>" >
+                    <select name="rol" id="rol" value="<?php $flag =  ($rol_busqueda === 1) ? 'admin' : 'consul';?>" >
                         <option value="">Tipo De Rol</option>
                         <option value="admin" <?php echo ($flag == 'admin') ? 'selected': ''; ?> >Administrar</option>
                         <option value="consul" <?php echo ($flag == 'admin') ? '': 'selected'; ?>>Consultar</option>
@@ -53,10 +57,10 @@
                 </label>
                 <label for="archivo" class="register register-sm">
                     <p>Foto de perfil</p>
-                    <input type="hidden" name="archivo" value="<?php echo $imagen; ?>">
+                    <input type="hidden" name="archivo" value="<?php echo $imagen_busqueda; ?>">
                     <input type="file"  id="imagen_archivo" name="imagen_archivo" accept=".jpg">
                 </label>
-                <input type="hidden" name="id-user" value="<?php echo $id; ?>">
+                <input type="hidden" name="id-user" value="<?php echo $id_busqueda; ?>">
                 <div class="reg-input">
 
                     <input  id="enviar" class="boton-submit YES " type="submit" value="ACTUALIZAR INFORMACION" >

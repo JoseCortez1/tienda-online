@@ -14,11 +14,12 @@
     $apellido = $_POST['apellido'];
     $correo = $_POST['correo'];
     $password = $_POST['password'];
+    $passOld = $_POST['password-old'];
     $id = (int)$_POST['id-user'];
     
     //hashear el password(Aumenta la seguridad en la contraseña guardad);
 
-    if(strlen($password) != 60){
+    if($password != $passOld){
 
         $opciones = [
             'cost'=>12, 

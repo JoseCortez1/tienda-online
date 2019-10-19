@@ -19,7 +19,7 @@
     <div class="contenedor-md">
         <div class="administradores-table">
             <div class="btn-listaAdmin reg-input">
-                <input type="submit" id="menu-principal" class="btn-alta " value="MENU PRINCIPAL">
+                
                 <input type="submit" id="alta-admin" class="btn-alta" value="ALTA ADMINISTRADOR">
             </div>
             <div class="head-admin">
@@ -38,7 +38,20 @@
                                 <?php echo $administrador['correo']; ?>
                             </p>
                             <div class="iconos">
-                                <img  src="img/trash.svg" class="icono eliminar" alt="imagen basura">
+                                <?php 
+                                    if( $_SESSION['id'] == $administrador['id']){
+                                        $bandera = true;
+                                    }
+                                    else{
+                                        $bandera = false;
+                                    }
+                                ?>
+                                <img  src="img/trash.svg" 
+                                    class="icono eliminar 
+                                        <?php echo ($bandera) ? 'desactivado' : ''; ?>"
+                                    <?php echo ($bandera) ? 'disable' : '
+                                    '; ?> 
+                                    alt="imagen basura">
                                 <input type="hidden"  name="id-user" value="<?php echo $administrador['id']; ?>">
                                 <img  src="img/user-edit-solid.svg" class="icono editar" alt="imagen editar">
                             </div>
