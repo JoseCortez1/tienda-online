@@ -55,6 +55,12 @@ let stateCheck = setInterval(() => {
                 e.target.parentElement.parentElement.parentElement.action = 'editar.php';
                 e.target.parentElement.parentElement.parentElement.submit();
             }
+            if(e.target.classList.contains('vista')){
+                let id= e.target.parentElement.parentElement.getAttribute('id');
+                e.target.parentElement.parentElement.parentElement.action = 'info-contacto.php';
+                e.target.parentElement.parentElement.parentElement.submit();
+            }
+
 
         });
 

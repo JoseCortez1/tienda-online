@@ -17,6 +17,12 @@ html {
     justify-content: space-evenly;
     -webkit-filter:grayscale(40%);
 }
+h1,h2,h3,h4{
+  font-family: 'Montserrat', sans-serif;
+}
+p,span,a,input,select{
+  font-family: 'Quicksand', sans-serif;
+}
 h2{
   font-family: 'Montserrat', sans-serif;
   font-size: 5vh;
@@ -360,7 +366,7 @@ h3 span{
 
 /**   Informacion Contactos **/
 
-
+/*
 .info-contacto{
   position: relative;
   height: 100%;
@@ -399,6 +405,65 @@ h3 span{
 .extras{
   padding-left: 0;
 }
+
+*/
+.info-contacto__div{
+  background: rgba(220, 238, 255, 0.945);
+  max-width: 400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 40px;
+  padding: 30px 40px;
+  border-radius: 2px;
+  box-shadow: -3px 3px 5px hsl(191, 8%, 26%);
+}
+.info-contacto__img{
+  border-radius: 10%;
+  margin: 10px 0;
+}
+.info-contacto-datos__div p{
+  margin-top: 10px;
+}
+.info-contacto-datos__div p,h3{
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.info-button-back__cont{
+  width: 100%;
+  height: 30px;
+  
+}
+.info-button-back__cont a{
+  width: 80%;
+  height: 100%;
+  display:block;
+  margin: 0 auto;
+  text-decoration: none;
+  background-color: #3578bb;
+  color: white;
+  text-align: center;
+  padding: 5px 0px;
+  box-shadow: -1px 1px 1px #4A6580;
+  transition: all 0.3s ease-in-out;
+}
+.info-button-back__cont a:hover{
+  background-color: #27588a;
+}
+.info-button-back__cont a:active{
+  background-color: #193857;
+}
+
+
+
+
+/*===================
+  Pantalla de cargar
+  ===================*/
+
 #carga{
   display: none;
   width: 100%;

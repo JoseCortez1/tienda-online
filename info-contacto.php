@@ -1,5 +1,6 @@
 
 <?php 
+    session_start();
     if(!(isset($_POST['id-user']))){
         header('location: index.php');
     }
@@ -7,32 +8,32 @@
     
     $id = (int)$_POST['id-user'];
     include 'inc/funciones/conexion.php';
-    $stmt = $conn->prepare("SELECT nombre, apellido, correo, archivo, rol, pass FROM administradores WHERE id = ?");
+    $stmt = $conn->prepare("SELECT nombre, apellido, correo, archivo, rol FROM administradores WHERE id = ?");
     $stmt->bind_param('i', $id);
     $stmt->execute();
 
-    $stmt->bind_result($nombre, $apellido, $correo, $imagen, $rol, $pass);
+    $stmt->bind_result($nombre_info, $apellido_info, $correo_info, $imagen_info, $rol_info);
     $stmt->fetch();
 
-    if($nombre){
+    if($nombre_info){
         include 'inc/templates/header.php';    
+        include 'inc/templates/navegacion.php';
     ?>
-        <div class="contenedor-big card-body grid-2 c-info" >
-            <img src="archivos/<?php echo $imagen ?>" alt="Imagen User" class="cuadro">
-            <div class="informacion">
+        <div class="info-contacto__div" >
+            <img src="archivos/<?php echo $imagen_info ?>" alt="Imagen User" class="info-contacto__img">
+            <div class="">
                 
-                <div class="personal">
-                    <h3><?php echo $nombre . " " . $apellido; ?></h3>
-                    <h4><?php echo ($rol === 1) ? "Administrador" : "Consultor"; ?></h4>
+                <div class="info-contacto-datos__div">
+                    <h3><?php echo $nombre_info . " " . $apellido_info; ?></h3>
+                    <p><?php echo ($rol_info === 1) ? "Administrador" : "Consultor"; ?></p>
                 </div>
 
                 
-                <div class="extras">
-                    <h4>Correo: <?php echo $correo; ?></h4>
-                    <h4>Contraseña enc: <?php echo $pass; ?></h4>
+                <div class="">
+                    <p>Correo: <?php echo $correo_info; ?></p>
                 </div>
 
-                <div class="register-btn crear-cuenta c.info">
+                <div class="info-button-back__cont">
                     <a href="listadoAdmin.php" id="" >Regresar</a> 
                 </div>
             </div>

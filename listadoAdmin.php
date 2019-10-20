@@ -46,14 +46,16 @@
                                         $bandera = false;
                                     }
                                 ?>
+                                <img  src="img/eye-regular.svg" class="icono vista" alt="imagen vista">
+                                <img  src="img/vista.svg" class="icono editar" alt="imagen editar">
                                 <img  src="img/trash.svg" 
                                     class="icono eliminar 
                                         <?php echo ($bandera) ? 'desactivado' : ''; ?>"
-                                    <?php echo ($bandera) ? 'disable' : '
-                                    '; ?> 
+                                        <?php echo ($bandera) ? 'disable' : ''; 
+                                    ?> 
                                     alt="imagen basura">
                                 <input type="hidden"  name="id-user" value="<?php echo $administrador['id']; ?>">
-                                <img  src="img/user-edit-solid.svg" class="icono editar" alt="imagen editar">
+                               
                             </div>
                         </div> 
                     </form>
