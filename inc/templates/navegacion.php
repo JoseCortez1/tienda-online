@@ -9,7 +9,7 @@
         <nav>
             <a href="principal.php" class="hover-nav nav">Inicio</a>
             <a class="hover-nav nav" href="listadoAdmin.php">Administradores</a>
-            <a class="hover-nav nav" href="#">Productos</a>
+            <a class="hover-nav nav" href="listado-productos.php">Productos</a>
         </nav>
         <div class="sesion-principal">
             <h3 class="" >Hola <span> <?php echo $nombre; ?> </span> </h3>

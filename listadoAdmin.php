@@ -1,6 +1,7 @@
 <?php 
     include "inc/funciones/sesiones.php";
-    include "inc/funciones/list_admin.php";
+    include "inc/funciones/list.php";
+    $respuesta = obtenerAdministradores();
     include "inc/templates/header.php";
 /*
     echo "<pre>";
