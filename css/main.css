@@ -457,6 +457,156 @@ h3 span{
   background-color: #193857;
 }
 
+/*===================
+  productos listado
+  ===================*/
+
+.producto{
+  display: grid;
+  grid-template-columns: repeat(7,1fr);
+  align-content: center;
+  padding:  20px 30px 0px 30px;
+  transition: all 0.5s ease-in-out;
+  box-shadow: 0 1px 1px rgba(3, 36, 70, 0.692);
+
+}
+.producto:hover{
+  background-color: rgb(136, 155, 173);
+  box-shadow: 0 0 2px rgb(101, 114, 128);
+}
+.transition-none:hover{
+  
+  background-color:white;
+  box-shadow: 0 1px 1px rgba(3, 36, 70, 0.692);
+  
+}
+
+/*---------------
+Boton de descripcion
+  ---------------*/
+.info-header__{
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+  .info-header__ .agregar-producto{
+    text-align: left;
+  }
+  .agregar-producto a{
+    display: inline-block;
+    text-decoration:  none;
+    background: #7998B0;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+  .agregar-producto a:hover{
+    background: rgb(89, 139, 177);
+    box-shadow: 0 0 2px #406080;
+  }
+  .agregar-producto a:active{
+    background: rgb(29, 74, 109);
+    border: black 1px solid;
+  }
+
+
+
+.detalles.iconos{
+  grid-column: 6/8;
+  grid-row: 1;
+}
+.detalles.iconos img{
+  margin: 0px 0px;
+}
+.descripcion-toogle{
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 15px 0 0;
+
+}
+  .des-toogle__input{
+    display: none;
+  }
+ 
+  .des-toogle__button{
+    border-radius: 15px;
+    position: relative;
+    display: inline-block;
+    font-size: 1rem;
+    line-height: 20px;
+    text-transform: uppercase;
+    background-color: #f2395a;
+    border: solid 1px #f2395a;
+    color: white;
+    width: 80px;
+    height: 30px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  .des-toogle__button::before{
+    border-radius: 5px;
+    position: absolute;
+    top: 5px;
+    left: 38px;
+    content: "off";
+    display: inline-block;
+    height: 20px;
+    padding: 1px 3px 3px 0px;
+    background-color: white;
+    color: #f2395a;
+    transition: all 0.3s ease;
+  }
+  .des-toogle__input:checked + .des-toogle__button {
+    background: #07794d;
+    border: solid 1px #07794d;
+  }
+  .des-toogle__input:checked + .des-toogle__button::before{
+    border-radius: 5px;
+    left: 5px;
+    content: "on";
+    color: #07794d;
+  }
+#descripcion-producto{
+  display: none;
+  border: none;
+  transition: all 0.5s ease-in-out;
+}
+.des-prod{
+  display: block!important;
+}
+#descripcion-producto p{
+  margin-top: 0px;
+  text-align: center;
+}
+.producto:hover + #descripcion-producto{
+  background-color: rgb(136, 155, 173);
+  box-shadow: 0 0 2px rgb(101, 114, 128);
+}
+
+.empty-query{
+  margin: 30px 0;
+  padding: 20px;
+  background-color: tomato;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
