@@ -8,51 +8,51 @@
     include 'inc/templates/navegacion.php';
     
 ?>
-    <header >
-        <h2>Añadir productos</h2>
+    <header class="header-productos add-products" >
+        <h2>Añadir producto</h2>
     </header>
     <main>
-        <form action="#" id="crear" method="post" enctype= "multipart/form-data" >
-            <div class="contenedores">
-                <label for="nombre">
+        <form action="#" id="crear" method="post" enctype= "multipart/form-data" class="contenedor flex-align" >
+
+                <label class="productos-add__label" for="nombre">
                     <p>Nombre: </p>
                     <input type="text"  name="nombre" id="nombre" >
                 </label>
-                <label for="codigo">
+                <label class="productos-add__label" for="codigo">
                     <p>codigo: </p>
-                    <input type="text"  name="codigo" id="codigo" >
+                    <input type="number"  name="codigo" id="codigo" min="0">
                 </label>
-                <label for="descripcion">
+                <label class="productos-add__label" for="descripcion">
                     <p>descripcion: </p>
                     <input type="text"  name="descripcion" id="descripcion" >
                 </label>
-                <label for="costo">
+                <label class="productos-add__label" for="costo">
                     <p>costo: </p>
-                    <input type="text"  name="costo" id="costo" >
+                    <input type="number"  name="costo" id="costo" min="0" step="0.5">
                 </label>
-                <label for="stock">
+                <label class="productos-add__label" for="stock">
                     <p>stock: </p>
-                    <input type="text"  name="stock" id="stock" >
+                    <input type="number"  name="stock" id="stock" >
                 </label>
     
-                <label for="archivo">
+                <label class="productos-add__label" for="archivo">
                     <p>Foto de perfil</p>
                     <input type="file"  id="imagen_archivo" name="imagen_archivo" accept=".jpg">
                 </label>
                 
-                <div class="btn-acciones">
+                <div class="productos-add__label btn-acciones">
                     <input  id="enviar" class="" type="submit" value="Añadir" >
                     <input id="cancelar" type="submit" class="" value="Cancelar">
 
                 </div>
-                
-            </div>
+               
         </form> 
 
-        <div  id ="campoError" class="campoError">
+        <div  id ="campoError" class="">
+            
         </div>
 
     </main>
-    <script src="js/productos.js"></script>
+    <script src="js/productos.js"> </script>
 </body>
 </html>

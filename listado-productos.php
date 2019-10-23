@@ -12,7 +12,7 @@
     echo "</pre>";*/
     
     ?>
-    <header id="usuario_logeado:<?php echo $_SESSION['id'];?>" class="usuarioLog">
+    <header id="usuario_logeado:<?php echo $_SESSION['id'];?>" class="usuarioLog list-productos">
         <?php
             include 'inc/templates/navegacion.php';
         ?>
@@ -21,6 +21,9 @@
                 <div class="agregar-producto">
                     <a href="add-product.php">
                         Añadir Producto
+                    </a>
+                    <a href="#" id="allCheckBoxes">
+                        Ver descripciones
                     </a>
                 </div>
             
@@ -71,15 +74,15 @@
                         </div>  
             
                         <div class="detalles">
-                            <label for="descripcion-toogle">
-                                <input type="checkbox" id="descripcion-toogle" class="des-toogle__input">
+                            <label for="descripcion-toogle:<?php echo $producto['id']; ?>">
+                                <input type="checkbox" id="descripcion-toogle:<?php echo $producto['id']; ?>" class="des-toogle__input">
                                 <span class="des-toogle__button"></span>
                             </label>
                         </div>
 
                         <div class="detalles">
                             <p>
-                            <?php echo  $producto['costo']; ?>
+                            $<?php echo  $producto['costo']; ?>
                             </p>
                         </div>
                         <div class="detalles">
@@ -104,7 +107,7 @@
 
                         <input type="hidden"  name="id-user" value="<?php echo $producto['id']; ?>">
                     </div> 
-                    <div id="descripcion-producto" class="">
+                    <div id="descripcion-producto<?php echo $producto['id']; ?>" class="descripcion-producto">
                         <p><?php echo  $producto['descripcion']; ?></p>
                     </div>
                 </form>
