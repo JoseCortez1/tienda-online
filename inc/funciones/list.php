@@ -23,4 +23,14 @@
         }
     }
 
+    function obtenerProducto($id){
+        include 'conexion.php';
+        try {
+            return $conn->query("SELECT * FROM productos WHERE eliminado = 0 AND status = 1 AND id= $id");
+        } catch (Exception $e) {
+            echo "Error !!: " . $e->getMessage() . "<br>";
+            return false;
+        }
+    }
+
 ?>

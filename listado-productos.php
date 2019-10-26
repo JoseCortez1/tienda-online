@@ -22,9 +22,10 @@
                     <a href="add-product.php">
                         Añadir Producto
                     </a>
+                    <!--
                     <a href="#" id="allCheckBoxes">
                         Ver descripciones
-                    </a>
+                    </a>-->
                 </div>
             
         </div>
@@ -43,9 +44,9 @@
                 <p>descripcion</p>
             </div>
 
-            <div class="detalles">
+            <!--    <div class="detalles">
                 <p>Costo</p>
-            </div>
+            </div> -->
             <div class="detalles">
                 <p>Stock</p>
             </div>
@@ -61,24 +62,24 @@
             if($respuesta->num_rows > 0){
 
                 foreach($respuesta as $producto){ ?>
-                <form action="#"  method="post" class="form-admin">
+                <form action="#"  method="post" class="form-admin" id="<?php echo $producto['id']; ?>">
                     <div class="producto" id="<?php echo $producto['id']; ?>">
                         <div class="detalles">
                             <img class="img-admin consultar-info" src="archivos_productos/<?php echo $producto['archivo'];?>" alt="foto usuario">
                         </div>
 
                         <div class="detalles">
-                            <p>
-                                <?php echo  $producto['nombre']; ?>
+                            <p title="<?php echo  $producto['descripcion']; ?>">
+                                    <?php echo  $producto['nombre']; ?>
                             </p>
                         </div>  
             
-                        <div class="detalles">
+                       <!-- <div class="detalles">
                             <label for="descripcion-toogle:<?php echo $producto['id']; ?>">
                                 <input type="checkbox" id="descripcion-toogle:<?php echo $producto['id']; ?>" class="des-toogle__input">
                                 <span class="des-toogle__button"></span>
                             </label>
-                        </div>
+                        </div>  -->
 
                         <div class="detalles">
                             <p>
@@ -100,16 +101,16 @@
                                     $bandera = false;
                                 }
                             ?>
-                            <img  src="img/eye-regular.svg" class="icono vista" alt="imagen vista">
-                            <img  src="img/vista.svg" class="icono editar" alt="imagen editar">
-                            <img  src="img/trash.svg" class="icono" alt=" imagen basura">    
+                            <a href="info-productos.php?producto_id=<?php echo $producto['id']; ?>"><img  src="img/eye-regular.svg" class="icono vista" alt="imagen vista"></a>
+                            <a href="edit-productos.php?producto_id=<?php echo $producto['id']; ?>"><img  src="img/vista.svg" class="icono editar" alt="imagen editar"></a>
+                            <img  src="img/trash.svg" class="icono eliminar" alt=" imagen basura">    
                         </div>
 
                         <input type="hidden"  name="id-user" value="<?php echo $producto['id']; ?>">
                     </div> 
-                    <div id="descripcion-producto<?php echo $producto['id']; ?>" class="descripcion-producto">
+                   <!-- <div id="descripcion-producto<?php echo $producto['id']; ?>" class="descripcion-producto">
                         <p><?php echo  $producto['descripcion']; ?></p>
-                    </div>
+                    </div>  -->
                 </form>
             <?php } 
             

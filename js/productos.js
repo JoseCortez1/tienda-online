@@ -16,7 +16,6 @@ let stateCheck = setInterval(() => {
         if(document.querySelector('.list-productos')){
             if(!(document.querySelector('.empty-query'))){
                 console.log("Ejecuando codigos de listado");
-                allChecks();
                 eventListenersListadoProductos();
             }    
         } else{
@@ -32,44 +31,36 @@ let stateCheck = setInterval(() => {
             });    
 
         }    
-        function allChecks(){
-            document.querySelector('#allCheckBoxes').addEventListener('click', function(e){
-                e.preventDefault();
 
-                let forms = document.querySelectorAll('input[type="checkbox"]');
-                let i = forms.length;
-                console.log(i);
-                
-                forms.forEach(function(check){
-                    
-                    if(check.checked == false){
-                        check.checked = true;    
-                    }else{
-                        check.checked = false;
-                    }
-                    
-                    
-                    let selector = `#descripcion-producto${i}`;
-                    document.querySelector(selector).classList.toggle('des-prod');
-                    check.parentElement.parentElement.parentElement.classList.toggle('boxSin');
-                    i--;
-                });
-
-
-            });
-        }
 
         function eventosDeProductos(elemento){
-
+            console.log(elemento);
             let idCompleto = elemento.id;
             let id = idCompleto.split(':');
-            
+            if(elemento.classList.contains('eliminar')){
+                Swal.fire({
+                    title: '¿Estas seguro?',
+                    text: "No puedes revertir esta opción!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Borrar!'
+                  }).then((result) => {
+                    if (result.value) {
+               
+                        eliminarElementoDom(elemento.parentElement.parentElement.parentElement);
 
-            if(elemento.id == `descripcion-toogle:${id[1]}`){ //Boton para mostrar detalles
-                let selector = `#descripcion-producto${id[1]}`;
-                document.querySelector(selector).classList.toggle('des-prod');
-                elemento.parentElement.parentElement.parentElement.classList.toggle('boxSin');
-            }     
+                      Swal.fire(
+                        'Eliminado!',
+                        'El producto fue eliminado',
+                        'success'
+                      )
+                    }
+                  })
+                   
+            }
+          
         
         }
                          
@@ -77,6 +68,7 @@ let stateCheck = setInterval(() => {
                             Añadir  Productos
         ===================================================== */
         function eventListenersAddProductos(){
+            console.log("hello");
             /**BTN SUBMIT CANCELAR */
             document.querySelector('#cancelar').addEventListener('click', function(e){
                 e.preventDefault();
@@ -91,41 +83,66 @@ let stateCheck = setInterval(() => {
                 let costo = document.querySelector('#costo');
                 let stock = document.querySelector('#stock');
                 let imagen_archivo = document.querySelector('#imagen_archivo');
-                
-                console.log(nombre.value);
-                console.log(codigo.value);
-                console.log(descripcion.value);
-                console.log(costo.value);
-                console.log(stock.value);
-                console.log(imagen_archivo.value);
+                if((nombre.value.trim() != '') && (codigo.value.trim() != '') && (descripcion.value.trim() != '') && (costo.value.trim()  != '')&& (stock.value.trim()  != '') ){
 
-                if((nombre.value.trim() != '') && (codigo.value.trim() != '') && (descripcion.value.trim() != '') && (costo.value.trim()  != '')&& (stock.value.trim()  != '') && (imagen_archivo.value.trim()  != '')){
+                    if((imagen_archivo.value.trim()  != '') && (document.querySelector('.edit-productos') == null)){
 
-                    if(correctFormat(imagen_archivo)){
-                        /*let form = new FormData;
-                        form.append('nombre', nombre.value);
-                        form.append('codigo', codigo.value);
-                        form.append('descripcion', descripcion.value);
-                        form.append('costo', costo.value);
-                        form.append('stock', stock.value);
-                        form.append('imagen_archivo', imagen_archivo.value);
-                        form.append('tipo', 'crear');*/
-                        addProducto(new FormData(document.querySelector('form')));
+                        if(correctFormat(imagen_archivo)){
+                            /*let form = new FormData;
+                            form.append('nombre', nombre.value);
+                            form.append('codigo', codigo.value);
+                            form.append('descripcion', descripcion.value);
+                            form.append('costo', costo.value);
+                            form.append('stock', stock.value);
+                            form.append('imagen_archivo', imagen_archivo.value);
+                            form.append('tipo', 'crear');*/
+                            let datos = new FormData(document.querySelector('form'))
+                            datos.append('tipo', 'crear');
+                            addProducto(datos);
+                        }else{
+                            
+                            showMessage("el formato de la imagen es incorrecto");
+                        }
                     }else{
-                        showMessage("el formato de la imagen es incorrecto");
+                        
+                        if(document.querySelector('.edit-productos') != null){
+                        let datos = new FormData(document.querySelector('form'));
+                        
+                        datos.append('tipo', 'actualizar');
+                        datos.append('id_actualizar', document.querySelector('header').id);
+                        addProducto(datos);
+                            
+                           
+                        }else{
+                            showMessage("Nop uedes dejar campos vacios");
+                        }
                     }
-
-
-                }else{
+                }               
+                else{
+                    
                     showMessage("Nop uedes dejar campos vacios");
-                }
 
+                }
+                    
                 
             });
+            if(document.querySelector('#crear')){
+
+                document.querySelector('#crear').addEventListener('change', function(e){
+                    if(e.target.value.trim() === ''){
+                        inputError(e.target);
+                        showMessage("No puedes dejar el campo vacio");
+                    }else{
+                        inputCorrecto(e.target);
+                    }
+                    console.log(e.target.value);
+                    console.log("hello");
+                });
+            }
                    
         }
         function addProducto(datos){
-            datos.append('tipo', 'crear');
+            
             let xhr = new XMLHttpRequest();
             xhr.open('post','inc/funciones/producto.php',true);
             xhr.onload = function(){
@@ -133,18 +150,35 @@ let stateCheck = setInterval(() => {
                     console.log(xhr.responseText);
                     console.log(JSON.parse(xhr.responseText));
                     let respuesta = JSON.parse(xhr.responseText);
-                    if(respuesta.respuesta === 'correcto'){
-                        document.querySelector('form').reset();
-                        showMessageExito("Producto correctamente agregado");
+                    if(datos.get('tipo') === 'crear'){
+                        
+                        if(respuesta.respuesta === 'correcto'){
+                            document.querySelector('form').reset();
+                            showMessageExito("Producto correctamente agregado");
+                        }else{
+                            showMessage(`Error al agregar el codigo: ${respuesta.respuesta}`);
+                        }
+                    }else if(datos.get('tipo') === 'actualizar'){
+                        if((respuesta.respuesta === 'correcto') || (respuesta.respuesta === 'iguales')){
+                            showMessageExito("Producto correctamente actualizado");
+                            setTimeout( ()=>{
+                                location.href = 'listado-productos.php';
+                            },500);
+
+                        }else{
+                            showMessage(`Error al actualizar el codigo: ${respuesta.respuesta}`);
+                        }
                     }else{
-                        showMessageExito("Error al agregar el producto");
+                        showMessage(`Error algo inesperado sucedio`);
                     }
                 }
             }
             xhr.send(datos);
 
         }
-    
+        /* =====================================================
+                            Funciones 
+        ===================================================== */
         function correctFormat(element){ 
             let dato = element.value;
             if(element.getAttribute('id') === 'imagen_archivo'){  //Validando que sea el input de imagen
@@ -156,6 +190,18 @@ let stateCheck = setInterval(() => {
               }
               return false;
             }
+        }
+        function inputError(elemento){         
+            if(!(elemento.classList.contains('inputError'))){
+
+                elemento.classList.add('inputError');
+            } 
+        }
+        function inputCorrecto(elemento){         
+            if((elemento.classList.contains('inputError'))){
+
+                elemento.classList.remove('inputError');
+            } 
         }
         function showMessage(texto){
             let error = document.querySelector('#campoError');
@@ -185,6 +231,25 @@ let stateCheck = setInterval(() => {
                 },3000);
             }
         }
+        function eliminarElementoDom(elementoEliminado){
+            
+            let id_eliminado = elementoEliminado.id;
+            elementoEliminado.remove();
+            let datos = new FormData();
+            datos.append('id_eliminar', id_eliminado);
+            datos.append('tipo','eliminar');
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', 'inc/funciones/producto.php',true);
+
+            xhr.onload = function(){
+                if(this.status === 200){
+                    console.log(xhr.responseText);
+                }
+            }
+
+            xhr.send(datos);
+
+        }
 
        
 
@@ -193,3 +258,40 @@ else{
   document.querySelector('#carga').style.display = 'block';
 }
 }, 100);
+
+
+
+/**
+ *           if(elemento.id == `descripcion-toogle:${id[1]}`){ //Boton para mostrar detalles
+                
+                let selector = `#descripcion-producto${id[1]}`;
+                document.querySelector(selector).classList.toggle('des-prod');
+                elemento.parentElement.parentElement.parentElement.classList.toggle('boxSin');
+            }  
+ *         function allChecks(){
+            document.querySelector('#allCheckBoxes').addEventListener('click', function(e){
+                e.preventDefault();
+
+                let forms = document.querySelectorAll('input[type="checkbox"]');
+                let i = forms.length;
+                console.log(i);
+                
+                forms.forEach(function(check){
+                    
+                    if(check.checked == false){
+                        check.checked = true;    
+                    }else{
+                        check.checked = false;
+                    }
+                    
+                    
+                    let selector = `#descripcion-producto${i}`;
+                    document.querySelector(selector).classList.toggle('des-prod');
+                    check.parentElement.parentElement.parentElement.classList.toggle('boxSin');
+                    i--;
+                });
+
+
+            });
+        }
+ */
