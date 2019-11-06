@@ -24,7 +24,7 @@
                 <input type="submit" id="alta-admin" class="btn-alta" value="ALTA ADMINISTRADOR">
             </div>
             <div class="head-admin">
-                <h2>Administradores</h2>
+                <h2>Administradores: <?php echo $respuesta->num_rows; ?></h2>
             </div>
             <div class="body-admin">
                 <?php foreach($respuesta as $administrador){ ?>

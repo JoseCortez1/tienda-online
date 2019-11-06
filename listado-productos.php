@@ -3,9 +3,9 @@
     include "inc/funciones/list.php";
     $respuesta = obtenerProductos();
     include "inc/templates/header.php";
-
-    /*echo "<pre>";
-        
+    /*
+    echo "<pre>";
+        var_dump($respuesta);   
         foreach($respuesta as $producto){
             var_dump($producto);   
         }
@@ -17,7 +17,7 @@
             include 'inc/templates/navegacion.php';
         ?>
         <div class="info-header__">
-            <h2>Productos</h2>
+            <h2>Productos: <?php echo $respuesta->num_rows; ?></h2>
                 <div class="agregar-producto">
                     <a href="add-product.php">
                         Añadir Producto
