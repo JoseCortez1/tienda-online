@@ -138,14 +138,14 @@ a,p{
     background-color: rgba(201, 122, 104, 0.452);
 }
     .imagen{
-        max-width: 100%;
-        
+        max-width: 100%;        
     }
         .imagen img{
+            height: 150px;
             border-radius: 10px;
             width: 100%;
         }
-    .formacion a{
+    .btn-add{
         display: block;
         width: 100%;
         text-align: center;

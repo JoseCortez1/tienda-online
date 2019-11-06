@@ -25,41 +25,37 @@
             <a href="#">
                 <i class="fas fa-shopping-cart"></i>
                 <span class="numero_items_carrito">
-                    15
                 </span>
             </a>
             <p id="total-compra">
-                $500.00
             </p>
         </div>
     </nav>
 
     <main class="main-grid-principal">
-        <!--Ofertar
-        <aside class="aside-principal">
-            <h3>Oferta del dia</h3>
-            <ul>
-                <li>  adipisicing elit a $12</li>
-                <li>  adipisicing elit a $56</li>
-                <li>  adipisicing elit a $65</li>
-                <li>  adipisicing elit a $98</li>
-            </ul>
-        </aside>-->
+
         <section class="section-principal">
             <h2 class="titulo">Nuestros Productos</h2>
             <div class="productos">
+                <?php 
+                    include "./inc/funciones/list.php";
+                    $resultado = obtenerProductos();
+                    
+                    foreach($resultado as $producto):
+                     /*   var_dump($producto);*/
+                ?>
                 
-                <div class="producto">
-                    <div class="imagen">
-                        <img src="./img/Todo-sobre-los-periféricos-4.jpg" alt="imagen producto">
-                    </div>
-                    <p> Nombre producto </p>
-                    <p>precio $50 c/u </p>
-                    <div class="formacion">
-                        <a href="#" class="btn btn-add" id="id-producto:1">Añadir</a>
+                    <div class="producto" id="<?php echo  $producto['id']; ?>">
+                        <div class="imagen">
+                            <img src="./archivos_productos/<?php echo  $producto['archivo']; ?>" alt="imagen producto">
+                        </div>
+                        <p> <?php echo  $producto['nombre']; ?> </p>
+                        <p> <?php echo  $producto['costo']; ?> c/u </p>
+                        <a href="#" class="btn btn-add" >Añadir</a>
                         
                     </div>
-                </div>
+
+                <?php endforeach; ?>
 
             </div>
 
