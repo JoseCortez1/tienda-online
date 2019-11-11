@@ -1,26 +1,93 @@
-<?php 
-    session_start();
-    if(isset($_GET['cerrar_sesion'])){
-        $_SESSION = array();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa|Fascinate+Inline&display=swap" rel="stylesheet"> 
+    <script src="https://kit.fontawesome.com/c7473a21c8.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./css/style_tienda.css">
+    <title>Tiendita de la esquina</title>
+</head>
+<body>
+    <?php session_start();
+    if(isset($_GET['close'])){
+        if($_GET['close'] == true){
+            $_SESSION = array();
+        }
     }
-    if(isset($_SESSION['login'])){
-        header('location:principal.php');
-    }
-    include "inc/templates/header.php";
-?>
-
-    <div class="card-body contenedor">
-        <div class="register">
-            <h2 style="text-align: center">LOGIN</h2>
-            <input type="text" placeholder="Correo" id="correo">
-            <input type="password" placeholder="Contraseña" id="pass">
+    ?>
+    <header> 
+        <div class="hero">
+            <img class="hero-img" src="./img/mike-petrucci-c9FQyqIECds-unsplash.jpg" alt="imagen principal">
         </div>
+    </header>
+    <nav class="navegacion-principal">
+        <a href="tienda.php?close=true">Inicio</a>
+        <a href="#">Ofertas</a>
+        <a href="#">Comprar</a>
+        <a href="#">Contactanos</a>
         
-        <div class="register-btn register">
-            <a href="#" id="registro" >Entrar</a> 
+        <div class="carrito">
+            <input type="hidden" name="" value="0" id="id_pedido">
+            <a href="#">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="numero_items_carrito" id="numero_items_carrito">
+                    0
+                </span>
+            </a>
+            <p id="total-compra"> 
+                $<span id="total">
+                    0
+                </span>
+            </p>
+
+            </span>
         </div>
-    </div>
-    <script src="js/index-script.js"></script>
-<script src="js/sweetalert2.all.min.js"></script>
+    </nav>
+
+    <main class="main-grid-principal">
+
+        <section class="section-principal">
+            <h2 class="titulo">Nuestros Productos</h2>
+            <pre>
+            <?php  
+            if(isset($_SESSION['pedido_actual']))
+                var_dump($_SESSION['pedido_actual']);
+            ?>
+            </pre>
+            <div class="productos">
+                <?php 
+                    include "./inc/funciones/list.php";
+                    $resultado = obtenerProductos();
+                    
+                    foreach($resultado as $producto):
+                     /*   var_dump($producto);*/
+                ?>
+                
+                    <div class="producto" id="<?php echo  $producto['id']; ?>">
+                        <div class="imagen">
+                            <img src="./archivos_productos/<?php echo  $producto['archivo']; ?>" alt="imagen producto">
+                        </div>
+                        <p> <?php echo  $producto['nombre']; ?> </p>
+                        <p> <?php echo  $producto['costo']; ?> c/u </p>
+                        <a href="#" class="btn btn-add" >Añadir</a>
+                        
+                    </div>
+
+                <?php endforeach; ?>
+
+            </div>
+
+        </section>
+    </main>
+    <footer class="footer-main">
+        <p>By: JEVC (Jose Eduardo Vazquez Cortez)</p>
+    </footer>
+    </footer>
+
+
+    <script src="./js/app.js"></script>
+
 </body>
 </html>

@@ -11,16 +11,23 @@ window.onload = function(){
             e.preventDefault();
             if(e.target.classList.contains('btn')){
                 let id = e.target.parentElement.id;
-                addCarrito(id);
+                carritoFuncion(id);
             }
         }); 
         
     }
 
-    function addCarrito(id){
+    function carritoFuncion(id){
+        let id_pedido = document.querySelector('#id_pedido');
         let pedido = new FormData();
         pedido.append('id_producto', id);
-        pedido.append('tipo', 'agregar');
+        pedido.append('id_pedido', id_pedido.value);
+    
+        if(parseFloat(document.querySelector('#total').textContent) == 0){
+            pedido.append('tipo', 'crear');    
+        }else{
+            pedido.append('tipo', 'agregar');
+        }
         
         let xhr= new XMLHttpRequest();
 
@@ -28,11 +35,38 @@ window.onload = function(){
 
         xhr.onload = function(){
             if(this.status == 200 ){
+
                 console.log(xhr.responseText);
+                //console.log(JSON.parse(xhr.responseText));
+                let listaPedido =  JSON.parse(xhr.responseText);
+                let costo = 0;
+
+                id_pedido.value = listaPedido.id_pedido;
+                //console.log(listaPedido.productos);
+                costo = listaPedido.productos.pop()['costo'];
+                addCarrito(costo);
             }
         }
 
         xhr.send(pedido);
+    }
+
+
+
+    function addCarrito(precio){
+        //console.log(nuevoArticulo);
+        let total_compra = document.querySelector('#total');     //Elemento que contiene el total de la compra
+        let total_actual = parseFloat(total_compra.textContent);        //Valor total de la compra        
+        let costo_nuevoArticulo = parseFloat(precio);   //Costo del nuevo articulo
+        total_actual += costo_nuevoArticulo;     //Suma del precio anterior y el nuevo
+        total_compra.textContent = total_actual; //Añadiendo precio actual y el nuevo    
+
+
+        
+        let articulos_carrito = document.querySelector('#numero_items_carrito');
+        let numero_articulos = parseInt(articulos_carrito.textContent);
+        numero_articulos += 1;
+        articulos_carrito.textContent = numero_articulos;
     }
     
 }//Fin de la carga de pagina

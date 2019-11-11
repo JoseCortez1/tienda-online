@@ -24,8 +24,8 @@ a,p{
     transition: all 0.8s ease-in-out;
 }
     .btn:hover{
-        background-color: rgb(226, 215, 53);
-        border: 1px solid black;
+        background-color: rgb(131, 131, 131);
+        border: 1px solid rgb(110, 100, 100);
     }
 .titulo{
     color: var(--colorAzul1);
