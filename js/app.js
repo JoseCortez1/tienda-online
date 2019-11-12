@@ -18,10 +18,9 @@ window.onload = function(){
     }
 
     function carritoFuncion(id){
-        let id_pedido = document.querySelector('#id_pedido');
+        
         let pedido = new FormData();
         pedido.append('id_producto', id);
-        pedido.append('id_pedido', id_pedido.value);
     
         if(parseFloat(document.querySelector('#total').textContent) == 0){
             pedido.append('tipo', 'crear');    
@@ -31,12 +30,13 @@ window.onload = function(){
         
         let xhr= new XMLHttpRequest();
 
-        xhr.open('POST', 'inc/funciones/list.php', true);
+        xhr.open('POST', './inc/pedidos_modelos.php', true);
 
         xhr.onload = function(){
             if(this.status == 200 ){
 
                 console.log(xhr.responseText);
+                /*
                 //console.log(JSON.parse(xhr.responseText));
                 let listaPedido =  JSON.parse(xhr.responseText);
                 let costo = 0;
@@ -44,7 +44,7 @@ window.onload = function(){
                 id_pedido.value = listaPedido.id_pedido;
                 //console.log(listaPedido.productos);
                 costo = listaPedido.productos.pop()['costo'];
-                addCarrito(costo);
+                addCarrito(costo);*/
             }
         }
 

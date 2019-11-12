@@ -65,7 +65,7 @@
                 <form action="#"  method="post" class="form-admin" id="<?php echo $producto['id']; ?>">
                     <div class="producto" id="<?php echo $producto['id']; ?>">
                         <div class="detalles">
-                            <img class="img-admin consultar-info" src="archivos_productos/<?php echo $producto['archivo'];?>" alt="foto usuario">
+                            <img class="img-admin consultar-info" src="../archivos_productos/<?php echo $producto['archivo'];?>" alt="foto usuario">
                         </div>
 
                         <div class="detalles">

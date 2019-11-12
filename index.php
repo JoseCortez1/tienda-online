@@ -10,12 +10,29 @@
     <title>Tiendita de la esquina</title>
 </head>
 <body>
-    <?php session_start();
+    <?php 
+    session_start();
+
     if(isset($_GET['close'])){
         if($_GET['close'] == true){
             $_SESSION = array();
+            header('location:./index.php');
         }
     }
+
+    if(!isset($_SESSION['user'])){
+        $cad1 = substr(str_shuffle("1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"),0,5);
+        $cad2 = substr(md5(microtime()),1,10);
+        $user = $cad1.$cad2;
+        $_SESSION['user'] = $user;
+        $_SESSION['tipo_user'] = "anonimo";
+    }else{
+        if($_SESSION['tipo_user'] == "anonimo"){
+            $user = $_SESSION['user'];
+        }
+    }
+    var_dump($_SESSION)
+
     ?>
     <header> 
         <div class="hero">
@@ -23,13 +40,13 @@
         </div>
     </header>
     <nav class="navegacion-principal">
-        <a href="tienda.php?close=true">Inicio</a>
+        <a href="index.php?close=true">Inicio</a>
         <a href="#">Ofertas</a>
         <a href="#">Comprar</a>
         <a href="#">Contactanos</a>
         
         <div class="carrito">
-            <input type="hidden" name="" value="0" id="id_pedido">
+            <input type="hidden" name="" value="<?php echo $user ?>" id="_user">
             <a href="#">
                 <i class="fas fa-shopping-cart"></i>
                 <span class="numero_items_carrito" id="numero_items_carrito">
@@ -58,7 +75,7 @@
             </pre>
             <div class="productos">
                 <?php 
-                    include "./inc/funciones/list.php";
+                    include "./inc/pedidos_modelos.php";
                     $resultado = obtenerProductos();
                     
                     foreach($resultado as $producto):
