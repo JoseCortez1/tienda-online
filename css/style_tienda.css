@@ -1,15 +1,23 @@
 :root{
-    
+
     --fontTitulos: 'Fascinate Inline', cursive;
     --fontCuerpo: 'Comfortaa', cursive;
     --colorAzul1: #70B39B;
     --colorAzul2: #D4FFEF;
     --colorRojo1: #B36E5F;
 }
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;;
+}
 body{
     margin: 0px 0px;
     padding: 0px 0px;
-    
+
+}
+main{
+  background: white;
 }
 a,p{
     font-family: var(--fontCuerpo);
@@ -45,11 +53,11 @@ a,p{
     position: relative;
 }
     .hero-img{
+      position: absolute;
         width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left:0;
+        display: block;
+        margin: -55% auto;
+        transform:  translate(0, 50%);
         z-index: -1;
     }
 
@@ -58,7 +66,7 @@ a,p{
     top:0;
     display: flex;
     align-items: center;
-    height: 8vh;
+    height: 10vh;
     justify-content: space-evenly;
     width: 100%;
     background-color: var(--colorRojo1);
@@ -76,7 +84,7 @@ a,p{
         }
     .navegacion-principal .carrito{
         width: 20%;
-        
+
         display: flex;
         justify-content: end;
         margin-right: 0px;
@@ -138,7 +146,7 @@ a,p{
     background-color: rgba(201, 122, 104, 0.452);
 }
     .imagen{
-        max-width: 100%;        
+        max-width: 100%;
     }
         .imagen img{
             height: 150px;
@@ -164,3 +172,63 @@ a,p{
     margin: 0;
     padding: 0;
 }
+
+
+
+/****************************************
+            Comprar.php
+****************************************/
+.carrito_titulo{
+  font-size: 2rem;
+}
+.btn-acciones{
+  width: 90%;
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px 0;
+}
+  .btn-acciones button{
+    width: 70px;
+    height: 40px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    transition: all 0.5s ease-in-out;
+  }
+#vaciar{
+  background-color: #AF1D09;
+}
+  #vaciar:hover{
+    background-color: #893220 ;
+    border: 1px solid #FF7D4E;
+  }
+.cuerpo_carrito{
+  margin:  0 auto;
+  margin-top: 20px;
+  width: 800px;
+}
+.form_carrito{
+  width: 60%;
+  display: block;
+  margin: 10px auto;
+
+}
+.campo{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.btn-borrar{
+  height: 30px;
+  width: 30px;
+}
+
+#pedir{
+  color: black;
+  background-color:  #3fed23 ;
+}
+  #pedir:hover{
+    background-color:  #52b343  ;
+    border: 1px solid  #367c2b ;
+  }

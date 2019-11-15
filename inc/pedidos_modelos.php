@@ -9,143 +9,126 @@ function obtenerProductos(){
         return false;
     }
 }
-if(isset($_POST['tipo'])){
-        try {
-            session_start();
-            include 'conexion.php';
-            $usuario = $_SESSION['user'];
-            $fecha = date("d.m.y");
-            $stmt = $conn->prepare("SELECT status, id FROM pedidos WHERE usuario = ? ");
-            $stmt->bind_param("s", $usuario);
-            $stmt->execute();
 
-            $stmt->bind_result($estatus_pedido, $id_pedido);
-            $stmt->fetch();
 
-            $flag_estado_pedido = false;
-            echo "estatus = $estatus_pedido , Id = $id_pedido ";
-            if(isset($id_pedido)){
-                if($estatus_pedido){
-                    echo "pedido abierto";
-                    $_SESSION['id_pedido'] = $id_pedido;
-                }else{
-                    echo "pedido cerrado";
-                    $flag_estado_pedido = true;
-                }  
-            }else{
-                $flag_estado_pedido = true;
-            }
-            $stmt->close();
-            if($flag_estado_pedido){
-                try{
-                    
-                    $stmtInsert = $conn->prepare("INSERT INTO pedidos(usuario, fecha) VALUES (?, ?) ");
-                    $stmtInsert->bind_param("ss", $usuario, $fecha);
-                    $stmtInsert->execute();
-                    if($stmtInsert->affected_rows > 0){
-                        $_SESSION['id_pedido'] = $stmtInsert->insert_id;
-                        echo "pedido abierto y creado";
-                    }
-                }catch(Exception $e){
-                    echo "Error insert: " . $e->getMessage() . "<br>";
-                    return false;
-                }
-                $stmtInsert->close();
-            }
-            $conn->close();
-        } catch (Exception $e) {
-            echo "Error !!: " . $e->getMessage() . "<br>";
-            return false;
-        }   
-        //var_dump($_POST);
+if(isset($_POST['tipo']) && $_POST['tipo'] == "crear"){
+  session_start();
+  $id_producto = $_POST['id_producto'];
+  $fecha_pedido = date("d.m.y");
+  $user = $_SESSION['user'];
+
+  include "conexion.php";
+
+  try{
+    /**var_dump($fecha_pedido)   ;
+    var_dump($user);
+    Insertando los datos para el pedido **/
+    $stmt = $conn->prepare(" INSERT INTO pedidos (fecha, usuario) VALUES(?,?) ");
+    $stmt->bind_param("ss", $fecha_pedido, $user);
+    $stmt->execute();
+    /**REvisando que se afecte la tabla, anunciando que se inserto correctamente
+       el pedido **/
+    if($stmt->affected_rows > 0){
+      //echo "Correctamente insertado";
+      $id_pedido  = $stmt->insert_id;
+      $_SESSION['id_pedido'] = $id_pedido;
+      $cantidad = 1;
+      /**Insertando el pedido_producto **/
+      $stmt = $conn->prepare(" INSERT INTO pedidos_productos(id_pedido, id_producto, cantidad) VALUES (?,?,?) ");
+      $stmt->bind_param("iii", $id_pedido, $id_producto,  $cantidad);
+      $stmt->execute();
+      if($stmt->affected_rows > 0){
+        /**Obteniendo el costo del producto para agregarlo al carrito **/
+        $stmt = $conn->prepare("SELECT costo FROM productos WHERE id = ? ");
+        $stmt->bind_param("i", $id_producto);
+        $stmt->execute();
+
+        $stmt->bind_result($costo_producto);
+        $stmt->fetch();
+
+        /**Revisando que la consulta retorne un valor **/
+        if(isset($costo_producto)){
+          echo $costo_producto;
+        }else{
+          echo "Error en consulta ";
+        }
+      }else{
+        echo " No se inserto el pedido_producto <br>";
+      }
+    }else{
+      echo "No se inserto el pedido <br>";
+    }
+
+  }catch(Exception $e){
+
+    echo "Error! Insert pedidos: " . $e->getMessage();
+
+  }
+}
+
+if(isset($_POST['tipo']) && $_POST['tipo'] == "agregar"){
+  session_start();
+  $id_pedido = $_SESSION['id_pedido'];
+  $id_producto = $_POST['id_producto'];
+  $cantidad = 1;
+
+  include "conexion.php";
+
+  /**Obteniendo productos con id_pedido igual **/
+  $pedidos_productos=  $conn->query("SELECT * FROM pedidos_productos WHERE id_pedido = $id_pedido ");
+
+  $flag_update_cantidad = false;
+  if(isset($pedidos_productos)){
+    /**Ciclo para leer cada campo de cada producto **/
+    foreach ($pedidos_productos  as $producto) {
+      // code...
+      /**Cambiamos el id_producto que viene como string a un entero para
+      poderlo comparar con el id_producto que viene del home */
+      if((int)$producto['id_producto'] == $id_producto){
+
+        /**En caso de ser igual incrementamos la cantidad que tenga en uno **/
+        $cantidad_actual = (int)$producto['cantidad'] + 1;
+
+        /**Realizamos una actualizacion a  la fila **/
+        $stmt = $conn->prepare("UPDATE pedidos_productos SET cantidad = ? WHERE id_pedido = ? AND id_producto = ? ");
+        $stmt->bind_param("iii",$cantidad_actual, $id_pedido, $id_producto);
+        $stmt->execute();
+
+        if($stmt->affected_rows > 0){
+          /**En caso de que se ejecute correctamenete hacemos un retorno del valor del producto para agregarlo
+          al carrito**/
+          $obj_costo_producto = $conn->query("SELECT costo FROM productos WHERE id = $id_producto");
+          foreach ($obj_costo_producto as $costo_producto);
+          echo (int)$costo_producto['costo'];
+          /**Se actualiza la bandera a true para no realizar una doble insercion
+          en la fila **/
+          $flag_update_cantidad = true;
+        }
+      }
+    }
+
+    /**En caso de no coincidir con ninguna fila la bandera no cambia
+    y se realiza una nueva insercion en la fula */
+    if(!$flag_update_cantidad){
+
+      $stmt = $conn->prepare("INSERT INTO pedidos_productos (id_pedido, id_producto, cantidad) VALUES (?,?,?) ");
+      $stmt->bind_param("iii", $id_pedido, $id_producto, $cantidad );
+      $stmt->execute();
+
+      if($stmt->affected_rows > 0){
+        $obj_costo_producto = $conn->query("SELECT costo FROM productos WHERE id = $id_producto");
+        foreach ($obj_costo_producto as $costo_producto);
+        echo (int)$costo_producto['costo'];
+      }
+    }
+  }
+
 
 }
- 
 
+if(isset($_POST['carrito'])){
+  session_start();
 
-
-    /*
-     session_start();
-        $id = $_POST['id_producto'];
-        include 'conexion.php';
-
-        $producto = $conn->query("SELECT * FROM productos WHERE eliminado = 0 AND status = 1 AND id= $id ");
-        
-        
-        $lastId = 0;    
-        foreach($producto as $pro);
-        var_dump($producto);
-        var_dump($pro); 
-
-        if($_POST['tipo'] == 'crear'){
-            $pedido = array(
-                'productos' => array(
-                    array(
-                        'nombre_producto' => $pro['nombre'],
-                        'cantidad_producto' => 1,
-                        'costo' => $pro['costo'],
-                        'id'  => $pro['id']
-                        )
-                ),
-                'total' => $pro['costo']
-
-                );
-            
-            $pedidoJSON = json_encode($pedido['productos']);
-             echo "'". $pedidoJSON . "'";
-            echo "<br>"; 
-            try{
-                $total = $pro['costo'];
-                $conn->query("INSERT INTO pedidos (productos, total) VALUES('$pedidoJSON', $total) ");
-                $objIDs= $conn->query(("SELECT id FROM pedidos ORDER BY id ASC"));
-                foreach($objIDs as $IDs);
-                $pedido['id_pedido'] = (int)$IDs['id'];
-
-                
-                $_SESSION['pedido_actual']= $pedido;
-
-            }catch(Exception $e){
-                echo "Error!!!: ". $e->getMessage() . "<br>";
-            }
-
-
-        }
-        if($_POST['tipo'] == 'agregar'){                                                              
-            $id_pedido = $_SESSION['pedido_actual']['id_pedido'];
-            $flag = false;
-            $i = 0;
-            $pos = -1;
-            $_SESSION['pedido_actual']['total'] = (float) $_SESSION['pedido_actual']['total'] + (float)$pro['costo'];
-
-            foreach($_SESSION['pedido_actual']['productos']['nombre_producto'] as $nombre_producto){
-                if($nombre_producto == $pro['nombre']){
-                    $flag = false;
-                    $pos = $i;
-                }
-                $i++;
-            }
-            if(!$flag){
-                array_push($_SESSION['pedido_actual']['productos'], array(
-                                'nombre_producto' => $pro['nombre'],
-                                'cantidad_producto' => 1,
-                                'costo' => $pro['costo'],
-                                'id'  => $pro['id']
-                                )
-                );
-            }else{
-                $_SESSION['pedido_actual']['productos'][$pos]['cantidad_producto'] += 1;
-                var_dump($_SESSION['pedido_actual']['productos'][$pos]);
-            }
-             var_dump($_SESSION['pedido_actual']['productos']); 
-            $pedidoJSON = json_encode($_SESSION['pedido_actual']['productos']);
-            $total = $_SESSION['pedido_actual']['total'];
-            try{
-                $conn->query("UPDATE pedidos SET productos = '$pedidoJSON', total = $total WHERE id= $id_pedido ");
-                $lastId = $id_pedido;
-            }catch(Exception $e){
-                echo "Error!!!: ". $e->getMessage() . "<br>";
-            }
-        }
-
-        echo json_encode($_SESSION['pedido_actual']);
-    */
+  $_SESSION['carrito_art'] = $_POST['carrito_art'];
+  $_SESSION['carrito_total'] = $_POST['carrito_total'];
+}
