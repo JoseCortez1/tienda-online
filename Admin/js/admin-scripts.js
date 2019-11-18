@@ -52,7 +52,12 @@ let stateCheck = setInterval(() => {
 
             if(e.target.classList.contains('consultar-info')){
                 let id= e.target.parentElement.getAttribute('id');
-                e.target.parentElement.parentElement.action = 'info-contacto.php';
+                if(document.querySelector(".pag_usuario")){
+                    e.target.parentElement.parentElement.action = 'info-contacto.php?alta_usuario=true';
+                }else{
+                  e.target.parentElement.parentElement.action = 'info-contacto.php';
+                }
+
                 e.target.parentElement.parentElement.submit();
             }
             if(e.target.classList.contains('editar')){
@@ -67,7 +72,11 @@ let stateCheck = setInterval(() => {
             }
             if(e.target.classList.contains('vista')){
                 let id= e.target.parentElement.parentElement.getAttribute('id');
-                e.target.parentElement.parentElement.parentElement.action = 'info-contacto.php';
+                if(document.querySelector(".pag_usuario")){
+                    e.target.parentElement.parentElement.parentElement.action = 'info-contacto.php?alta_usuario=true';
+                }else{
+                    e.target.parentElement.parentElement.parentElement.action = 'info-contacto.php';
+                }
                 e.target.parentElement.parentElement.parentElement.submit();
             }
 
@@ -84,8 +93,12 @@ let stateCheck = setInterval(() => {
 
             let xhml = new XMLHttpRequest;  //creado el objeto
 
+            if(document.querySelector(".pag_usuario")){
+                xhml.open('POST','inc/funciones/remove-admin.php?alta_usuario=true',true); //Abriendo la conexion
+            }else{
+                xhml.open('POST','inc/funciones/remove-admin.php',true); //Abriendo la conexion
+            }
 
-            xhml.open('POST','inc/funciones/remove-admin.php',true); //Abriendo la conexion
 
             xhml.onload = function(){ //verificando que se acceda corretamente
                 if(this.status === 200){
