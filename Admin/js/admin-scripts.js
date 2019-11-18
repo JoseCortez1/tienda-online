@@ -9,7 +9,12 @@ let stateCheck = setInterval(() => {
         /**BTN SUBMIT ALTA DE ADMIN */
         document.querySelector("#alta-admin").addEventListener('click', function(e){
             e.preventDefault();
-            window.location.href = 'alta.php';
+            if(document.querySelector("#alta-admin").classList.contains("pag_usuario")){
+              window.location.href = 'alta.php?usuario=true';
+            }else{
+              window.location.href = 'alta.php';
+            }
+
         });
 
 
@@ -40,7 +45,7 @@ let stateCheck = setInterval(() => {
                 }else{
                     console.log("Esto se presiono en admin: ")
                     console.log(e.target);
-                    
+
 
                 }
             }
@@ -52,7 +57,12 @@ let stateCheck = setInterval(() => {
             }
             if(e.target.classList.contains('editar')){
                 let id= e.target.parentElement.parentElement.getAttribute('id');
-                e.target.parentElement.parentElement.parentElement.action = 'editar.php';
+                if(document.querySelector(".pag_usuario")){
+                    e.target.parentElement.parentElement.parentElement.action = 'editar.php?alta_usuario=true';
+                }else{
+                  e.target.parentElement.parentElement.parentElement.action = 'editar.php';
+                }
+
                 e.target.parentElement.parentElement.parentElement.submit();
             }
             if(e.target.classList.contains('vista')){
@@ -69,9 +79,9 @@ let stateCheck = setInterval(() => {
             console.log(id);
             let form = new FormData;
             form.append('id', id);
-            
+
             //ELIMINADO DE LA BASE
-            
+
             let xhml = new XMLHttpRequest;  //creado el objeto
 
 
@@ -90,7 +100,7 @@ let stateCheck = setInterval(() => {
         }
 
         function eliminaLogeado(id_eliminar){
-            
+
             let etiquetaUserLogin = document.querySelector('.usuarioLog').getAttribute('id').split(':');
             let id_sesion = etiquetaUserLogin[1];
             if(id_eliminar === id_sesion){
@@ -101,10 +111,10 @@ let stateCheck = setInterval(() => {
 
         //Prevencion de eliminar el usuario logeado
 
-        /**La siguiente funcion se agregara en el momneto de eliminar al elemento 
-         * preguntando si el elemento que se va a eliminar es igual al 
-         * elemento que se ha logeado en caso de que sa verdad se cierra la sesion 
-         * a su vez se manda una alerta de lo que pasara, caso contrario se 
+        /**La siguiente funcion se agregara en el momneto de eliminar al elemento
+         * preguntando si el elemento que se va a eliminar es igual al
+         * elemento que se ha logeado en caso de que sa verdad se cierra la sesion
+         * a su vez se manda una alerta de lo que pasara, caso contrario se
          * continua con la eliminacion normal
          */
        /* eliminarLogin('click', function(e){

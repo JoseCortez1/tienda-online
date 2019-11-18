@@ -10,7 +10,20 @@ function obtenerProductos(){
     }
 }
 
+function obtenerListaPedido($id_pedido){
+  include "conexion.php";
+  $queryMamalona = "SELECT nombre, id_pedido, id_producto, cantidad, costo  FROM pedidos_productos JOIN productos WHERE pedidos_productos.id_producto = productos.id AND pedidos_productos.id_pedido = $id_pedido";
+  return $conn->query($queryMamalona);
 
+}
+
+function obtenerNombreProducto($id){
+  include "conexion.php";
+  $obj_item = $conn->query("SELECT nombre FROM productos WHERE id = $id ");
+  foreach ($obj_item as $key => $value) {
+    return $value;
+  }
+}
 if(isset($_POST['tipo']) && $_POST['tipo'] == "crear"){
   session_start();
   $id_producto = $_POST['id_producto'];
@@ -126,9 +139,70 @@ if(isset($_POST['tipo']) && $_POST['tipo'] == "agregar"){
 
 }
 
+if(isset($_POST['tipo']) && $_POST['tipo'] == "modificar"){
+  session_start();
+  $id_pedido = (int)$_SESSION['id_pedido'];
+  $id_producto = (int)$_POST['id_producto'];
+  $cantidad = (int)$_POST['cantidad'];
+  if($cantidad >= 0){
+    include "conexion.php";
+    $stmt = $conn->prepare("UPDATE pedidos_productos SET cantidad = ? WHERE id_pedido = ? AND id_producto = ? ");
+    $stmt->bind_param("iii", $cantidad, $id_pedido, $id_producto );
+    $stmt->execute();
+    //var_dump($conn);
+    if($stmt->affected_rows > 0){
+      $respuesta = array(
+        "respuesta"=> "exitoso"
+      );
+      echo json_encode($respuesta);
+
+    }else{
+      $respuesta = array(
+        "respuesta" => "fasho"
+      );
+      echo json_encode($respuesta);
+    }
+  }else{
+    $respuesta = array(
+      "respuesta" => "fasho"
+    );
+    echo json_encode($respuesta);
+  }
+
+}
+
+if(isset($_POST['tipo']) && $_POST['tipo'] == "eliminar"){
+  session_start();
+  include "conexion.php";
+  $id_producto = $_POST['id_producto'];
+  $id_pedido = $_SESSION['id_pedido'];
+
+  $stmt = $conn->query("DELETE FROM pedidos_productos WHERE id_producto = $id_producto AND id_pedido = $id_pedido ");
+  if(isset($stmt)){
+    $stmt = $conn->query("UPDATE pedidos SET status = 0 WHERE id = $id_pedido ");
+    if(isset($stmt)){
+      $_SESSION['id_pedido'] = -1;
+      echo "UPDATE correctly";
+    }
+    echo "Good job motherfucker";
+  }else{
+    echo "oh no!!! motherFucker";
+  }
+
+}
+
+if(isset($_POST['tipo']) && $_POST['tipo'] == "pagar"){
+  session_start();
+  $id_pedido = $_SESSION['id_pedido'];
+  include "conexion.php";
+  $stmt = $conn->query("UPDATE pedidos SET status = 0 WHERE id = $id_pedido ");
+  if($stmt){
+    echo "chingon";
+  }
+
+}
 if(isset($_POST['carrito'])){
   session_start();
-
   $_SESSION['carrito_art'] = $_POST['carrito_art'];
   $_SESSION['carrito_total'] = $_POST['carrito_total'];
 }

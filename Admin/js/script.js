@@ -16,14 +16,14 @@ let stateCheck = setInterval(() => {
           }else{
             window.location.href = 'listadoAdmin.php';
           }
-          
+
         });
-        
+
         var form = document.querySelector("form");
 
         /**Blur listener */
-        form.addEventListener("blur", function( event ) {  //listener blur para evaluar el campo una vez fuera de el 
-          
+        form.addEventListener("blur", function( event ) {  //listener blur para evaluar el campo una vez fuera de el
+
           let dato = event.target.value;
           if(dato.trim() != ''){
             //the target has data
@@ -32,15 +32,15 @@ let stateCheck = setInterval(() => {
 
               //LLmamamos a la funcion para verificar el correo
               verificarCorreo(event.target);
-        
+
             }
             if(event.target.getAttribute('id') == "password"){
               passwordValidate(event.target);
             }
 
           }else{
-            
-            
+
+
             if(form.getAttribute('id') === 'crear' ){
               //the target doesn't have data
               showMessage(event.target, "campo vacio");
@@ -53,10 +53,10 @@ let stateCheck = setInterval(() => {
               }
 
             }
-            
+
 
           }
-          
+
         }, true);
 
         //funciones
@@ -76,34 +76,47 @@ let stateCheck = setInterval(() => {
               console.log(rol.trim() === '');
               console.log(imagen_archivo.value.trim() === '') ;
           if( (nombre.trim() === '') || (apellido.trim() === '') || (correo.trim() === '') || (!(passwordValidate(password))) ||  (rol.trim() === '') ){
-            
+
             showMessage(null, "campo vacio ");
-          }  
+          }
           else{
             if(form.getAttribute('id') === 'actualizar'){
               if(imagen_archivo.value.trim() === '') {
                 console.log("actualizar vacia");
-                form.action = "inc/funciones/act-admin.php";
+                if(document.querySelector(".pag_usuario")){
+                    form.action = "inc/funciones/act-admin.php?alta_usuario=true";
+                }else{
+                  form.action = "inc/funciones/act-admin.php";
+                }
                 form.submit();
               }else{
-                
-                if(correctFormat(imagen_archivo)){ 
+
+                if(correctFormat(imagen_archivo)){
                   console.log("actualizar formato c");
+                  if(document.querySelector(".pag_usuario")){
+                      form.action = "inc/funciones/act-admin.php?alta_usuario=true";
+                  }else{
                     form.action = "inc/funciones/act-admin.php";
+                  }
                     form.submit();
                 }
               }
 
-                
+
             }else{
               //EN caso de no encnontrarnos en actualizar peidremos una imagene
               if((imagen_archivo.value.trim() === '')){
                 showMessage(null, "campo vacio ");
               }else{
                 //Al tener todos los datos verificamosel formato correcto de la imagen esto nos sirve en caso de que se quiera modificar la imagene en actualizar y crear
-                if(correctFormat(imagen_archivo)){ 
+                if(correctFormat(imagen_archivo)){
                   console.log("añadir correcto");
-                  form.action = "inc/funciones/add-admin.php";
+                  if(document.querySelector(".pag_usuario")){
+                    form.action = "inc/funciones/add-admin.php?alta_usuario=true";
+                  }else{
+                    form.action = "inc/funciones/add-admin.php";
+                  }
+
                   form.submit();
               }
               }
@@ -112,10 +125,10 @@ let stateCheck = setInterval(() => {
 
         });
 
-        function correctFormat(element){ 
+        function correctFormat(element){
           let dato = element.value;
           if(element.getAttribute('id') === 'imagen_archivo'){  //Validando que sea el input de imagen
-            
+
             let extension = dato.split('.').pop();  //Separando la extencion para validar
             if(extension == 'jpg'){   //Validando la extension correcta
               notEmptyData(element);
@@ -130,12 +143,12 @@ let stateCheck = setInterval(() => {
           element.classList.add("error");
         }
         function notEmptyData(element){
-          element.classList.remove("error");            
+          element.classList.remove("error");
         }
 
-        
+
         function showMessage(element, texto){ //Mostrar MEnsaje
-    
+
           if(element != null){
 
             emptyData(element);
@@ -146,9 +159,9 @@ let stateCheck = setInterval(() => {
               let p = document.createElement('p');
               p.setAttribute('id', 'errorEncontrado');
               p.innerHTML = "Error: " + texto;
-          
-              document.querySelector('#campoError').appendChild(p); 
-              document.querySelector('#campoError').classList.add('error'); 
+
+              document.querySelector('#campoError').appendChild(p);
+              document.querySelector('#campoError').classList.add('error');
             }
             let strError = document.querySelector('#errorEncontrado').textContent;
             if(strError.indexOf(texto) < 0){
@@ -156,24 +169,24 @@ let stateCheck = setInterval(() => {
             }
 
             setTimeout(() =>{
-              document.querySelector('#campoError').classList.remove('error'); 
+              document.querySelector('#campoError').classList.remove('error');
                 setTimeout(() => {
 
-                  document.querySelector('#errorEncontrado').remove(); 
-                }, 500);    
+                  document.querySelector('#errorEncontrado').remove();
+                }, 500);
             },3000);
         },100);
-            
+
         }
-        
+
         function passwordValidate(pass){
-          
+
           if(pass.value.length >= 8){
             notEmptyData(pass);
             console.log("passValidate: true");
             return true;
           }
-          showMessage(pass, "contraseña debe contener al menos 8 caracteres");        
+          showMessage(pass, "contraseña debe contener al menos 8 caracteres");
           return false;
         }
         function verificarCorreo(correo){
@@ -185,7 +198,11 @@ let stateCheck = setInterval(() => {
           datos.append('correo', correo.value);
 
           let xhr = new XMLHttpRequest();
-          xhr.open('post', 'inc/funciones/check-correo.php', true);
+          if(document.querySelector(".pag_usuario")){
+            xhr.open('post', 'inc/funciones/check-correo.php?alta_usuario=true', true);
+          }else{
+            xhr.open('post', 'inc/funciones/check-correo.php', true);
+          }
 
           xhr.onload = function(){
             if(this.status === 200){
@@ -196,7 +213,7 @@ let stateCheck = setInterval(() => {
               }
 
               if( (pagina.classList.contains('alta')) && (respuesta.respuesta === 'iguales')){
-             
+
                 correo.value = '';
                 showMessage(correo, "Correo ya registrado");
 
@@ -215,11 +232,11 @@ let stateCheck = setInterval(() => {
                 }
 
               }
-            
-             
-              
+
+
+
             }
-          } 
+          }
           xhr.send(datos);
         }
 

@@ -1,11 +1,23 @@
-<?php 
+<?php
 
     function obtenerAdministradores(){
         include 'conexion.php';
-        try{    
-    
+        try{
+
             return $conn->query("SELECT * FROM administradores WHERE eliminado = 0 AND status = 1 ORDER BY id DESC");
-    
+
+        }catch(Exception $e){
+            echo "Error !!" . $e->getMessage() . "<br>";
+            return false;
+        }
+
+    }
+    function obtenerUsuarios(){
+        include 'conexion.php';
+        try{    
+
+            return $conn->query("SELECT * FROM usuarios WHERE eliminado = 0 AND status = 1 ORDER BY id DESC");
+
         }catch(Exception $e){
             echo "Error !!" . $e->getMessage() . "<br>";
             return false;
@@ -33,7 +45,7 @@
             echo "Error !!: " . $e->getMessage() . "<br>";
             return false;
         }
-        
+
     }
 
     function obtenerPedidoNoR($id) {
@@ -55,5 +67,3 @@
         }
     }
 ?>
-
-

@@ -16,26 +16,28 @@
     $password = $_POST['password'];
     $passOld = $_POST['password-old'];
     $id = (int)$_POST['id-user'];
-    
+
     //hashear el password(Aumenta la seguridad en la contraseña guardad);
 
     if($password != $passOld){
 
         $opciones = [
-            'cost'=>12, 
+            'cost'=>12,
         ];
         $passHash = password_hash($password,PASSWORD_BCRYPT,$opciones);
-    
+
     }else{
         $passHash = $password;
     }
-
-    $rol = $_POST['rol'];
-    if($rol == 'admin'){
-        $tipoUser = 1;
-    }else{
-        $tipoUser = 2;
+    if(!isset($_GET['alta_usuario'])){
+      $rol = $_POST['rol'];
+      if($rol == 'admin'){
+          $tipoUser = 1;
+      }else{
+          $tipoUser = 2;
+      }
     }
+
 
     if($file_name != ''){
         $cadena = explode(".",$file_name);          // Separa el nombre para obtener la extension, almacena en un arreglo
@@ -49,7 +51,7 @@
 
     }else{
         $file_name = $_POST['archivo'];
-        
+
 
         $cadena = explode(".",$file_name);          // Separa el nombre para obtener la extension, almacena en un arreglo
         $ext = $cadena[1];                          // Extension extraida del arreglo en la variable $cadena
@@ -59,23 +61,33 @@
         echo $file_enc;
         echo "<br>";
         echo $newNAme;
-        
+
     }
-   
-   
+
+
 
 //Terminar la consulta par apoder actualizar la tabla despues revisar el location del header y la pagina de editar
 
     try {
+      if(isset($_GET['alta_usuario'])){
+        $stmt = $conn->prepare("UPDATE usuarios SET nombre=?, apellido=?, correo=?, pass=?, archivo_n=?, archivo=? WHERE id = ? ");
+        $stmt->bind_param("ssssssi", $nombre, $apellido, $correo, $passHash,  $file_enc, $newNAme, $id);
+      }else{
         $stmt = $conn->prepare("UPDATE administradores SET nombre=?, apellido=?, correo=?, pass=?, archivo_n=?, archivo=?, rol=?  WHERE id = ? ");
         $stmt->bind_param("ssssssii", $nombre, $apellido, $correo, $passHash,  $file_enc, $newNAme, $tipoUser, $id);
+      }
         $stmt->execute();
 
         $stmt->close();
         $conn->close();
-        header('Location: ../../listadoAdmin.php');
+        if(isset($_GET['alta_usuario'])){
+            header('Location: ../../listado-usuarios.php');
+        }else{
+          header('Location: ../../listadoAdmin.php');
+        }
+
     } catch (Exception $e) {
        echo $e->getMessage();
-      
+
     }
     ?>

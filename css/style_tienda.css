@@ -18,9 +18,46 @@ body{
 }
 main{
   background: white;
+  padding-bottom: 30px;
 }
 a,p{
     font-family: var(--fontCuerpo);
+}
+.carrito_vacio{
+  display: block;
+  margin: 0 auto;
+  width: 50%;
+}
+.bg-gris{
+  width: 100%;
+  background-color: #C4C4C4;
+}
+.bg-w{
+  width: 100%;
+  background-color: white;
+}
+.error-pag{
+  width: 100%;
+  height: 100vh;
+  overflow-y: hidden;
+}
+.img_error{
+  display: inline-block!important;
+  width: 25px;
+  padding-right: 10px;
+}
+.mostrar_error{
+  display: block!important;
+  position: absolute;
+  background-color: tomato;
+  right: 10%;
+  top: 50%;
+  padding: 10px 20px;
+  height: 50px;
+  border-radius: 20px;
+-webkit-transition: all 0.5s ease-in-out;
+ -moz-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 .btn{
     background-color: white;
@@ -160,7 +197,7 @@ a,p{
 
     }
 .footer-main{
-    margin: 20px 0 0 0;
+    margin: 0 0 0 0;
     padding: 10px 0;
     text-align: center;
     background-color: #B36E5F;
@@ -168,11 +205,6 @@ a,p{
     font-size: 1.2rem;
     font-family: var(--fontCuerpo);
 }
-.footer-main p{
-    margin: 0;
-    padding: 0;
-}
-
 
 
 /****************************************
@@ -186,8 +218,10 @@ a,p{
   display: flex;
   justify-content: flex-end;
   margin: 10px 0;
+
 }
   .btn-acciones button{
+    border-radius: 20px;
     width: 70px;
     height: 40px;
     border: none;
@@ -214,14 +248,15 @@ a,p{
 
 }
 .campo{
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  margin: 10px 0;
 }
 
 .btn-borrar{
   height: 30px;
   width: 30px;
+  cursor:  pointer;
 }
 
 #pedir{
@@ -231,4 +266,59 @@ a,p{
   #pedir:hover{
     background-color:  #52b343  ;
     border: 1px solid  #367c2b ;
+  }
+
+
+/********************************************
+            comfirmacion de pago
+*********************************************/
+.pago_confirmado{
+  display: block!important;
+  top: 0;
+  left: 0;
+  background-color: white;
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+}
+.conf_lista_inm{
+  margin: 0 auto;
+  width: 40%;
+}
+.campo_lista_inm{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-gap: 20px;
+  border-bottom: 2px solid #e1e1e1;
+}
+  .campo_lista_inm > p{
+    text-align: center;
+    padding: 10px 10px;
+    border-right:  2px solid #e1e1e1;
+  }
+  .campo_lista_inm > p:last-child{
+    border-right: none;
+  }
+.total_lista_inm{
+  margin-top: 20px;
+  color: tomato;
+  weight: 700;
+  text-align: right;
+}
+
+.btn-lista-inm{
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+  .btn-lista-inm > button{
+    width: 40%;
+    height: 50px;
+  }
+
+  .btn-lista-inm .cancelar_compra{
+    background-color: tomato;
+  }
+  .btn-lista-inm .confirmar_pago{
+    background-color:  #39af2b ;
   }

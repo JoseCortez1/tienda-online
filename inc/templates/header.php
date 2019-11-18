@@ -46,7 +46,7 @@
         <a href="index.php">Inicio</a>
         <a href="#">Ofertas</a>
         <a href="comprar.php">Comprar</a>
-        <a href="#">Contactanos</a>
+        <a href="index.php?close=1">Contactanos</a>
 
         <div class="carrito">
             <input type="hidden" name="" value="<?php echo $user ?>" id="_user">

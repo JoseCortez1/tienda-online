@@ -1,4 +1,6 @@
 <?php include "inc/templates/header.php"; ?>
+<div class="bg-w">
+
 
     <main class="main-grid-principal">
 
@@ -35,10 +37,5 @@
 
         </section>
     </main>
-    <footer class="footer-main">
-        <p>By: JEVC (Jose Eduardo Vazquez Cortez)</p>
-    </footer>
-    <script src="./js/app.js"></script>
-
-</body>
-</html>
+  </div>
+<?php include "./inc/templates/footer.php"; ?>
