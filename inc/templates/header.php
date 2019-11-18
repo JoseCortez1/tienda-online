@@ -65,4 +65,8 @@
 
             </span>
         </div>
+        <div class="login_container">
+          <img src="./img/user-solid.svg" alt="usuario">
+          <p><?php echo $_SESSION['user']; ?></p>
+        </div>
     </nav>
