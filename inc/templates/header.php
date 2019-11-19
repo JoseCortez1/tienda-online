@@ -31,7 +31,8 @@
     }else{
         if($_SESSION['tipo_user'] == "anonimo"){
             $user = $_SESSION['user'];
-
+        }else{
+          $user = $_SESSION['user'];
         }
     }
 
@@ -46,7 +47,7 @@
         <a href="index.php">Inicio</a>
         <a href="#">Ofertas</a>
         <a href="comprar.php">Comprar</a>
-        <a href="index.php?close=1">Contactanos</a>
+        <a href="#">Contactanos</a>
 
         <div class="carrito">
             <input type="hidden" name="" value="<?php echo $user ?>" id="_user">
@@ -65,5 +66,26 @@
 
             </span>
         </div>
+<<<<<<< HEAD
         
+=======
+        <div class="imgs">
+          <div class="login_container">
+            <img src="./img/user-solid.svg" class="login_usuario_btn" alt="usuario">
+            <?php if($_SESSION['tipo_user'] != "anonimo"){ ?>
+                <p><?php echo $_SESSION['user']; ?></p>
+            <?php } ?>
+
+          </div>
+          <?php if($_SESSION['tipo_user'] != "anonimo"){ ?>
+            <div class="login_container">
+
+                  <img src="./img/sign-out-alt-solid.svg" id ="cerrar_sesion" alt="usuario" title="cerrar sesion">
+
+
+            </div>
+          <?php } ?>
+        </div>
+
+>>>>>>> usuario
     </nav>
