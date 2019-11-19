@@ -96,6 +96,18 @@ window.onload = function(){
           }
         });
       }
+      if(document.querySelector(".imgs")){
+        document.querySelector(".imgs").addEventListener("click", function usuarioFunciones(e){
+          e.preventDefault();
+          if(e.target.classList.contains("login_usuario_btn")){
+              location.href = "login_usuario.php"
+          }
+          if(e.target.id == "cerrar_sesion"){
+            location.href = "index.php?close=true";
+          }
+
+        })
+      }
     }
 
     function carritoFuncion(id){
