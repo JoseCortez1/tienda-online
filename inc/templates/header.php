@@ -66,9 +66,6 @@
 
             </span>
         </div>
-<<<<<<< HEAD
-        
-=======
         <div class="imgs">
           <div class="login_container">
             <img src="./img/user-solid.svg" class="login_usuario_btn" alt="usuario">
@@ -87,5 +84,4 @@
           <?php } ?>
         </div>
 
->>>>>>> usuario
     </nav>
