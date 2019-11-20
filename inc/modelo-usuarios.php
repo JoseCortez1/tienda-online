@@ -16,6 +16,7 @@ if(isset($_POST['tipo']) && ($_POST['tipo'] == "verificar")){
   } catch (Exception $e) {
     echo $e->getMessage();
   }
+  $stmt->close();
 
 
 
@@ -27,6 +28,35 @@ if(isset($_POST['tipo']) && ($_POST['tipo'] == "verificar")){
           $_SESSION['user'] = $nombre_usuario;
           $_SESSION['tipo_user'] = "usuario_logeado";
           $_SESSION['id'] = $id_usuario;
+          $usuario_str = (string)$id_usuario;
+          $status_abierto = 1;
+
+          $id_pedido = $conn->prepare(" SELECT id FROM pedidos WHERE usuario = ? AND status = ? ");
+
+          $id_pedido->bind_param("si", $usuario_str, $status_abierto);
+
+          $id_pedido->execute();
+
+          $id_pedido->bind_result($id_pedido_db);
+
+          $id_pedido->fetch();
+
+          $id_pedido->close();
+
+
+          if($id_pedido_db){
+            $datos = $conn->query("SELECT nombre, id_pedido, id_producto, cantidad, costo  FROM pedidos_productos JOIN productos WHERE pedidos_productos.id_producto = productos.id AND pedidos_productos.id_pedido = $id_pedido_db ");
+            $total = 0;
+            $items = 0;
+            
+            foreach ($datos as $dato) {
+              $total += (float)$dato['cantidad'] * (float)$dato['costo'];
+              $items += (float)$dato['cantidad'];
+            }
+            $_SESSION['carrito_art']= $items;
+            $_SESSION['carrito_total'] = $total;
+            $_SESSION['id_pedido'] = $id_pedido_db;
+          }
 
           $respuesta = array(
               'respuesta' => 'correcto'

@@ -12,7 +12,7 @@ function obtenerProductos(){
 
 function obtenerListaPedido($id_pedido){
   include "conexion.php";
-  $queryMamalona = "SELECT nombre, id_pedido, id_producto, cantidad, costo  FROM pedidos_productos JOIN productos WHERE pedidos_productos.id_producto = productos.id AND pedidos_productos.id_pedido = $id_pedido";
+  $queryMamalona = "SELECT nombre, id_pedido, id_producto, cantidad, costo  FROM pedidos_productos JOIN productos WHERE pedidos_productos.id_producto = productos.id AND pedidos_productos.id_pedido = $id_pedido ";
   return $conn->query($queryMamalona);
 
 }
@@ -28,7 +28,11 @@ if(isset($_POST['tipo']) && $_POST['tipo'] == "crear"){
   session_start();
   $id_producto = $_POST['id_producto'];
   $fecha_pedido = date("d.m.y");
-  $user = $_SESSION['user'];
+  if($_SESSION['tipo_user'] == "anonimo"){
+    $user = $_SESSION['user'];
+  }else{
+    $user = $_SESSION['id'];
+  }
 
   include "conexion.php";
 
