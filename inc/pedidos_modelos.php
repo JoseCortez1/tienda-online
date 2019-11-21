@@ -175,14 +175,16 @@ if(isset($_POST['tipo']) && $_POST['tipo'] == "modificar"){
 
 }
 
+/**
 if(isset($_POST['tipo']) && $_POST['tipo'] == "eliminar"){
   session_start();
   include "conexion.php";
   $id_producto = $_POST['id_producto'];
   $id_pedido = $_SESSION['id_pedido'];
 
-  $stmt = $conn->query("DELETE FROM pedidos_productos WHERE id_producto = $id_producto AND id_pedido = $id_pedido ");
-  if(isset($stmt)){
+  $stmt = $conn->query(" DELETE FROM pedidos_productos WHERE id_producto = $id_producto AND id_pedido = $id_pedido ");
+
+  if(!isset($stmt)){
     $stmt = $conn->query("UPDATE pedidos SET status = 0 WHERE id = $id_pedido ");
     if(isset($stmt)){
       $_SESSION['id_pedido'] = -1;
@@ -192,6 +194,19 @@ if(isset($_POST['tipo']) && $_POST['tipo'] == "eliminar"){
   }else{
     echo "oh no!!! motherFucker";
   }
+
+}**/
+if(isset($_POST['tipo']) && $_POST['tipo'] == "vaciar"){
+  session_start();
+  include "conexion.php";
+  $id_pedido = $_SESSION['id_pedido'];
+
+  $stmt = $conn->query("UPDATE pedidos SET status = 0 WHERE id = $id_pedido ");
+  if(isset($stmt)){
+    $_SESSION['id_pedido'] = -1;
+    echo "UPDATE correctly";
+  }
+
 
 }
 

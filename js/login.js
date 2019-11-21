@@ -29,14 +29,24 @@ window.onload = function(){
       let pass_confirm = document.querySelector("#pass_confirm").value;
 
       if((nombre.trim() != "") && (correo.trim() != "") && (pass.trim() != "") && (pass_confirm.trim() != "")){
-        if(pass === pass_confirm){
-          form.append("tipo", 'crear');
-          regristrarUsuario(form);
+        
+        if(pass.length >= 8 ){
+
+          if(pass === pass_confirm){
+            form.append("tipo", 'crear');
+            regristrarUsuario(form);
+          }else{
+            Swal.fire({
+              type: 'error',
+              title: 'Oops...',
+              text: 'Las contraseñas no coinciden!'
+            });
+          }
         }else{
           Swal.fire({
             type: 'error',
             title: 'Oops...',
-            text: 'Las contraseñas no coinciden!'
+            text: 'Lacontraseña debe tener al menos 8 caracteres!'
           });
         }
       }else{

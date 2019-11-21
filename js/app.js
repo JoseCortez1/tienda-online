@@ -26,7 +26,7 @@ window.onload = function(){
 
           let numid = id.split(".");
 
-            eliminarProductoLista(numid[1]);
+            actualizarCantidad(numid[1],0);
           }
           if(e.target.id === 'vaciar'){
             Swal.fire({
@@ -43,7 +43,7 @@ window.onload = function(){
                   ids.forEach(item=>{
                     let id = item.id.split('.')[1];
                     item.parentElement.remove();
-                    eliminarProductoLista(id);
+                    vaciarCarrito(id);
 
                   });
                   modificar_total(0,0);
@@ -199,9 +199,10 @@ window.onload = function(){
       }
       xhr.send(datos);
     }
-    function eliminarProductoLista(id){
+    
+    function vaciarCarrito(id){
       let datos = new FormData();
-      datos.append('tipo', 'eliminar');
+      datos.append('tipo', 'vaciar');
       datos.append('id_producto',id);
 
       let xhr = new XMLHttpRequest();
